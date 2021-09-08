@@ -23,8 +23,7 @@ include "drawQuestion.php";
 include "drawDatabases.php";
 include "drawAnswer.php";
 include "save.php";
-
-print_r($_POST);
+include "fillDataList.php";
 
 $txtQuestion = "";
 $txtAns0 = "";
@@ -82,9 +81,12 @@ if(isset($_POST["hidden"]))
         <tr><td></td><td><input type="submit" name="Submit" id="Submit" value="Save"></td></tr>
     </table>
 </form>
+<form method="post">
+    <input list="questionId">
+    <input type="submit" name="submit" value="Edit Question">
+</form>
 <?php
 $drawDatabases = new DrawDatabases();
-
 $drawDatabases->draw();
 ?>
 </body>

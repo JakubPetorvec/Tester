@@ -11,9 +11,13 @@ class DrawQuestions
             ?><table class="question-table"><?php
             ?><thead><tr><th>ID</th><th>Question</th><th>Type</th></tr></thead><?php
             ?><tbody><?php
+
+            $fillDataList = new FillDataList();
+            $questionId = [];
             foreach ($myQuestions as $myQuestion)
             {
                 $question = QuestionMapper::map($myQuestion);
+                array_push($questionId,$question->getId())
                 ?>
                 <tr>
                     <td><?php echo $question->getId() ?></td>
@@ -23,6 +27,7 @@ class DrawQuestions
                 <?php
 
             }
+            $fillDataList->fill($questionId);
             ?></tbody><?php
             echo "</table>";
         }

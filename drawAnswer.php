@@ -29,4 +29,9 @@ class DrawAnswers
         }
 
     }
+
+    public function selectRow($id):void
+    {
+        echo "gugu";
+    }
 }
