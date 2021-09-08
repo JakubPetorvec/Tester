@@ -14,6 +14,10 @@
             <td><input type="text" name="txtQuestion" id="txtQuestion"></td>
         </tr>
         <tr>
+            <td><label>Button Type<input type="radio" name="type" value="button" checked></label></td>
+            <td><label>Textbox Type<input type="radio" name="type" value="textbox"></label></td>
+        </tr>
+        <tr>
             <td><label>Answer</label></td>
             <td><input type="text" name="txtAns0" id="txtAns0"></td>
             <td><input type="checkbox" name="check[0]" value="1"></td>
