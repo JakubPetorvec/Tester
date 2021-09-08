@@ -4,11 +4,6 @@ class DrawAnswers
 {
     public function draw(Connection $connection):void
     {
-        include "Entities/answer.php";
-        include "answerSQLBuilder.php";
-        include "answerMapper.php";
-
-
         if ($connection->connect() === true)
         {
             $answerSqlBuilder = new AnswerSQLBuilder();
