@@ -8,10 +8,14 @@ include "questionParser.php";
 include "answerSQLBuilder.php";
 include "answerMapper.php";
 include "answerParser.php";
+include "answerTypes.php";
+include "dataValidation.php";
+
 
 $connection = new Connection();
+$areDataValidate = new DataValidation();
 
-if ($connection->connect() === true)
+if ($connection->connect() === true && $areDataValidate->validateData($_POST) === true)
 {
     $questionParser = new QuestionParser();
     $question = $questionParser->parse($_POST);
@@ -20,15 +24,25 @@ if ($connection->connect() === true)
     $insertSql = $questionSqlBuilder->buildInsert($question);
 
     $questionId = $connection->insert($insertSql);
-    for($i = 0; $i <3; $i++)
-    {
-        $answerParser = new AnswerParser();
-        $answer = $answerParser->parse($_POST, $questionId, $i);
 
-        $answerSqlBuilder = new AnswerSQLBuilder();
-        $insertSql = $answerSqlBuilder->buildInsert($answer);
-        $connection->insert($insertSql);
+    $isButtonType = new AnswerTypes();
+    if($isButtonType->isButtonType($_POST)){
+        for($i = 0; $i <3; $i++)
+        {
+            $answerParser = new AnswerParser();
+            $answer = $answerParser->parse($_POST, $questionId, $i);
+
+            $answerSqlBuilder = new AnswerSQLBuilder();
+            $insertSql = $answerSqlBuilder->buildInsert($answer);
+            $connection->insert($insertSql);
+        }
     }
+else
+{
+    echo '<script type="text/javascript">';
+    echo ' alert("JavaScript Alert Box by PHP")';
+    echo '</script>';
+}
 
     /*
     $myQuestions = $connection->getAll($questionSqlBuilder->buildGetAll());
@@ -38,8 +52,8 @@ if ($connection->connect() === true)
     foreach ($myAnswers as $myAnswer) { $answer = AnswerMapper::map($myAnswer);}
     */
 
-    header("Location: index.php", true, 301);
-    exit();
+   /* header("Location: index.php", true, 301);
+    exit();*/
 }
 
 
