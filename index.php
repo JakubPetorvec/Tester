@@ -82,6 +82,7 @@ if(isset($_POST["hidden"]))
     </table>
 </form>
 <form method="post">
+    <label>Question ID</label>
     <input list="questionId">
     <input type="submit" name="submit" value="Edit Question">
 </form>
