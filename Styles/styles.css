@@ -1,0 +1,34 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.input-table{
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.5cm;
+    min-width: 300px;
+}
+
+.input-table{
+    padding: 10px;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.question-table thead tr,
+.answer-table thead tr{
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.question-table td,
+.answer-table td {
+    padding: 12px 15px;
+}
+
+.question-table tbody tr:nth-of-type(even),
+.answer-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
