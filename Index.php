@@ -8,22 +8,20 @@
 </head>
 <body>
 <?php
-include "Entities/question.php";
-include "Entities/answer.php";
-include "connection.php";
-include "questionSQLBuilder.php";
-include "questionMapper.php";
-include "questionParser.php";
-include "answerSQLBuilder.php";
-include "answerMapper.php";
-include "answerParser.php";
-include "answerTypes.php";
-include "dataValidation.php";
-include "drawQuestion.php";
-include "drawDatabases.php";
-include "drawAnswer.php";
-include "save.php";
-include "fillDataList.php";
+
+use Renderers\DrawDatabases;
+use Operations\Save;
+use Operations\Update;
+
+spl_autoload_register(function ($class){
+    $filePath = str_replace("\\", "/", $class).".php";
+    if(file_exists($filePath))
+    {
+        include_once ($filePath);
+    }
+});
+
+print_r($_POST);
 
 $txtQuestion = "";
 $txtAns0 = "";
@@ -34,26 +32,37 @@ $checkBox1 = "";
 $checkBox2 = "";
 $radioButton0 = "checked";
 $radioButton1 = "";
+$buttonValue = "save";
 
 $save = new Save();
+$update = new Update();
 
-if(isset($_POST["hidden"]))
+if(isset($_POST["action"]))
 {
-    $save->save();
-    $txtQuestion = $_POST["txtQuestion"];
-    $txtAns0 = $_POST["txtAns0"];
-    $txtAns1 = $_POST["txtAns1"];
-    $txtAns2 = $_POST["txtAns2"];
+    if($_POST === "0")
+    {
+        $save->save();
+        $txtQuestion = $_POST["txtQuestion"];
+        $txtAns0 = $_POST["txtAns0"];
+        $txtAns1 = $_POST["txtAns1"];
+        $txtAns2 = $_POST["txtAns2"];
 
-    $checkBox0 = isset($_POST["check"][0]) ? "checked" : "";
-    $checkBox1 = isset($_POST["check"][1]) ? "checked" : "";
-    $checkBox2 = isset($_POST["check"][2]) ? "checked" : "";
-    if($_POST["type"] == "button") {$radioButton0 = "checked"; $radioButton1 = "";}
-    else {$radioButton0 = ""; $radioButton1 = "checked";}
+        $checkBox0 = isset($_POST["check"][0]) ? "checked" : "";
+        $checkBox1 = isset($_POST["check"][1]) ? "checked" : "";
+        $checkBox2 = isset($_POST["check"][2]) ? "checked" : "";
+        if($_POST["type"] == "button") {$radioButton0 = "checked"; $radioButton1 = "";}
+        else {$radioButton0 = ""; $radioButton1 = "checked";}
+    }
+    elseif ($_POST["action"] === "1")
+    {
+        echo "Updating question with id: ".$_POST["questionId"];
+        $buttonValue = "update";
+
+    }
 }
 ?>
-<form name="frmSave" method="post" action="index.php">
-    <input type="hidden" name="hidden" value="0">
+<form name="frmSave" method="post" action="Index.php">
+    <input type="hidden" name="action" value="0">
     <table class="input-table">
         <tr>
             <td><label>Question</label></td>
@@ -78,13 +87,8 @@ if(isset($_POST["hidden"]))
             <td><input type="text" name="txtAns2" value="<?php echo $txtAns2?>"></td>
             <td><input type="checkbox" name="check[2]" <?php echo $checkBox2?>></td>
         </tr>
-        <tr><td></td><td><input type="submit" name="Submit" id="Submit" value="Save"></td></tr>
+        <tr><td></td><td><input type="submit" name="Submit" id="Submit" value="<?php echo $buttonValue?>"></td></tr>
     </table>
-</form>
-<form method="post">
-    <label>Question ID</label>
-    <input list="questionId">
-    <input type="submit" name="submit" value="Edit Question">
 </form>
 <?php
 $drawDatabases = new DrawDatabases();

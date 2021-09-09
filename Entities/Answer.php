@@ -1,5 +1,7 @@
 <?php
 
+namespace Entities;
+
 class Answer
 {
     private int $id;

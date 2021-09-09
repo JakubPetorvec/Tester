@@ -1,5 +1,7 @@
 <?php
 
+namespace Entities;
+
 class Question
 {
     private int $id;
