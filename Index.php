@@ -12,6 +12,9 @@
 use Renderers\DrawDatabases;
 use Operations\Save;
 use Operations\Update;
+use Operations\Filler;
+use Entities\InputTable;
+use Operations\Delete;
 
 spl_autoload_register(function ($class){
     $filePath = str_replace("\\", "/", $class).".php";
@@ -20,8 +23,6 @@ spl_autoload_register(function ($class){
         include_once ($filePath);
     }
 });
-
-print_r($_POST);
 
 $txtQuestion = "";
 $txtAns0 = "";
@@ -33,13 +34,25 @@ $checkBox2 = "";
 $radioButton0 = "checked";
 $radioButton1 = "";
 $buttonValue = "save";
+$action = "0";
+
+if(isset($_POST["action"])){
+    $action = "1";
+}
 
 $save = new Save();
-$update = new Update();
+$fillInputTable = new Filler();
+$inputTable = new InputTable();
 
-if(isset($_POST["action"]))
+$currentAction = "create";
+if (isset($_GET["action"])) $currentAction = $_GET["action"];
+
+$isSended = false;
+if (isset($_POST["sended"])) $isSended = $_POST["sended"];
+
+if($currentAction === "create")
 {
-    if($_POST === "0")
+    if($isSended)
     {
         $save->save();
         $txtQuestion = $_POST["txtQuestion"];
@@ -53,16 +66,44 @@ if(isset($_POST["action"]))
         if($_POST["type"] == "button") {$radioButton0 = "checked"; $radioButton1 = "";}
         else {$radioButton0 = ""; $radioButton1 = "checked";}
     }
-    elseif ($_POST["action"] === "1")
+}
+elseif ($currentAction == "update")
+{
+    if ($isSended)
     {
-        echo "Updating question with id: ".$_POST["questionId"];
-        $buttonValue = "update";
-
+        echo "foo";
+        if(true)
+        {
+            $update = new Update();
+            if(!$update->update($_GET["questionId"], $_POST)) echo "Error [Update cannot be processed]";
+            header("Location: index.php");
+            exit();
+        }
     }
+
+    echo "Editing question with id: ".$_GET["questionId"];
+    $fillInputTable->fill($_GET["questionId"], $inputTable);
+    $txtQuestion = $inputTable->getQuestion();
+    $txtAns0 = $inputTable->getAnswer0();
+    $txtAns1 = $inputTable->getAnswer1();
+    $txtAns2 = $inputTable->getAnswer2();
+    $radioButton0 = $inputTable->getRadioButton();
+    $radioButton1 = $inputTable->getRadioText();
+    $checkBox0 = $inputTable->getCheckBoxAnswer0();
+    $checkBox1 = $inputTable->getCheckBoxAnswer1();
+    $checkBox2 = $inputTable->getCheckBoxAnswer2();
+
+}
+elseif ($currentAction == "delete")
+{
+    $delete = new Delete();
+    $delete->delete($_GET["questionId"]);
+    header("Location: index.php");
+    exit();
 }
 ?>
-<form name="frmSave" method="post" action="Index.php">
-    <input type="hidden" name="action" value="0">
+<form name="frmSave" method="post">
+    <input type="hidden" name="sended" value="1">
     <table class="input-table">
         <tr>
             <td><label>Question</label></td>
@@ -91,6 +132,8 @@ if(isset($_POST["action"]))
     </table>
 </form>
 <?php
+
+
 $drawDatabases = new DrawDatabases();
 $drawDatabases->draw();
 ?>

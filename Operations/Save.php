@@ -2,6 +2,8 @@
 
 namespace Operations;
 
+use \AnswerTypes;
+use \DataValidation;
 use DB\Connection;
 use Parsers\QuestionParser;
 use SQLBuilders\QuestionSQLBuilder;
@@ -13,11 +15,11 @@ class Save
     public function save():void
     {
         $connection = new Connection();
-        $areDataValidate = new DataValidation();
+        $isValidate = new DataValidation();
 
         $myErrors = [];
 
-        if ($connection->connect() === true && $areDataValidate->validateData($_POST, $myErrors) === true)
+        if ($connection->connect() === true && $isValidate->validateData($_POST, $myErrors) === true)
         {
             $questionParser = new QuestionParser();
             $question = $questionParser->parse($_POST);
@@ -38,6 +40,8 @@ class Save
                     $insertSql = $answerSqlBuilder->buildInsert($answer);
                     $connection->insert($insertSql);
                 }
+                header("Location: index.php");
+                exit();
             }
         }
         if (!empty($myErrors))

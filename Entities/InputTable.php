@@ -4,15 +4,23 @@ namespace Entities;
 
 class InputTable
 {
-    private string $question;
-    private string $answer0;
-    private string $answer1;
-    private string $answer2;
-    private bool $radioButton;
-    private bool $radioText;
-    private bool $checkBoxAnswer0;
-    private bool $checkBoxAnswer1;
-    private bool $checkBoxAnswer2;
+    private int $questionId = 0;
+    private int $answerId0 = 0;
+    private int $answerId1 = 0;
+    private int $answerId2 = 0;
+    private int $questionType = 0;
+    private int $answerValue0 = 0;
+    private int $answerValue1 = 0;
+    private int $answerValue2 = 0;
+    private string $question = "";
+    private string $answer0 = "";
+    private string $answer1 = "";
+    private string $answer2 = "";
+    private string $radioButton = "";
+    private string $radioText = "";
+    private string $checkBoxAnswer0 = "";
+    private string $checkBoxAnswer1 = "";
+    private string $checkBoxAnswer2 = "";
 
     /**
      * @return string
@@ -79,84 +87,210 @@ class InputTable
     }
 
     /**
-     * @return bool
+     * @return string
      */
-    public function isRadioButton(): bool
+    public function getRadioButton(): string
     {
         return $this->radioButton;
     }
 
     /**
-     * @param bool $radioButton
+     * @param string $radioButton
      */
-    public function setRadioButton(bool $radioButton): void
+    public function setRadioButton(string $radioButton): void
     {
         $this->radioButton = $radioButton;
     }
 
     /**
-     * @return bool
+     * @return string
      */
-    public function isRadioText(): bool
+    public function getRadioText(): string
     {
         return $this->radioText;
     }
 
     /**
-     * @param bool $radioText
+     * @param string $radioText
      */
-    public function setRadioText(bool $radioText): void
+    public function setRadioText(string $radioText): void
     {
         $this->radioText = $radioText;
     }
 
     /**
-     * @return bool
+     * @return string
      */
-    public function isCheckBoxAnswer0(): bool
+    public function getCheckBoxAnswer0(): string
     {
         return $this->checkBoxAnswer0;
     }
 
     /**
-     * @param bool $checkBoxAnswer0
+     * @param string $checkBoxAnswer0
      */
-    public function setCheckBoxAnswer0(bool $checkBoxAnswer0): void
+    public function setCheckBoxAnswer0(string $checkBoxAnswer0): void
     {
         $this->checkBoxAnswer0 = $checkBoxAnswer0;
     }
 
     /**
-     * @return bool
+     * @return string
      */
-    public function isCheckBoxAnswer1(): bool
+    public function getCheckBoxAnswer1(): string
     {
         return $this->checkBoxAnswer1;
     }
 
     /**
-     * @param bool $checkBoxAnswer1
+     * @param string $checkBoxAnswer1
      */
-    public function setCheckBoxAnswer1(bool $checkBoxAnswer1): void
+    public function setCheckBoxAnswer1(string $checkBoxAnswer1): void
     {
         $this->checkBoxAnswer1 = $checkBoxAnswer1;
     }
 
     /**
-     * @return bool
+     * @return string
      */
-    public function isCheckBoxAnswer2(): bool
+    public function getCheckBoxAnswer2(): string
     {
         return $this->checkBoxAnswer2;
     }
 
     /**
-     * @param bool $checkBoxAnswer2
+     * @param string $checkBoxAnswer2
      */
-    public function setCheckBoxAnswer2(bool $checkBoxAnswer2): void
+    public function setCheckBoxAnswer2(string $checkBoxAnswer2): void
     {
         $this->checkBoxAnswer2 = $checkBoxAnswer2;
     }
 
+    /**
+     * @return int
+     */
+    public function getQuestionId(): int
+    {
+        return $this->questionId;
+    }
 
+    /**
+     * @param int $questionId
+     */
+    public function setQuestionId(int $questionId): void
+    {
+        $this->questionId = $questionId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAnswerId0(): int
+    {
+        return $this->answerId0;
+    }
+
+    /**
+     * @param int $answerId0
+     */
+    public function setAnswerId0(int $answerId0): void
+    {
+        $this->answerId0 = $answerId0;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAnswerId1(): int
+    {
+        return $this->answerId1;
+    }
+
+    /**
+     * @param int $answerId1
+     */
+    public function setAnswerId1(int $answerId1): void
+    {
+        $this->answerId1 = $answerId1;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAnswerId2(): int
+    {
+        return $this->answerId2;
+    }
+
+    /**
+     * @param int $answerId2
+     */
+    public function setAnswerId2(int $answerId2): void
+    {
+        $this->answerId2 = $answerId2;
+    }
+
+    /**
+     * @return int
+     */
+    public function getQuestionType(): int
+    {
+        return $this->questionType;
+    }
+
+    /**
+     * @param int $questionType
+     */
+    public function setQuestionType(int $questionType): void
+    {
+        $this->questionType = $questionType;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAnswerValue0(): int
+    {
+        return $this->answerValue0;
+    }
+
+    /**
+     * @param int $answerValue0
+     */
+    public function setAnswerValue0(int $answerValue0): void
+    {
+        $this->answerValue0 = $answerValue0;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAnswerValue1(): int
+    {
+        return $this->answerValue1;
+    }
+
+    /**
+     * @param int $answerValue1
+     */
+    public function setAnswerValue1(int $answerValue1): void
+    {
+        $this->answerValue1 = $answerValue1;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAnswerValue2(): int
+    {
+        return $this->answerValue2;
+    }
+
+    /**
+     * @param int $answerValue2
+     */
+    public function setAnswerValue2(int $answerValue2): void
+    {
+        $this->answerValue2 = $answerValue2;
+    }
 }

@@ -14,4 +14,14 @@ class AnswerSQLBuilder
     {
         return "SELECT * FROM answers";
     }
+
+    public function buildGetRowById($rowId): string
+    {
+        return "SELECT * FROM answers WHERE question_id = {$rowId} ";
+    }
+
+    public  function buildUpdate(Answer $answer, $rowId):string
+    {
+        return "UPDATE questions SET question = 'Testasd', `type` = '0' WHERE questions.id = {$rowId}";
+    }
 }

@@ -27,6 +27,12 @@ class Connection
         return mysqli_insert_id($this->connection);
     }
 
+    public function update(string $sql){
+        if(!mysqli_query($this->connection, $sql)){
+            echo "Error with updating ".mysqli_error($this->connection);
+        }
+    }
+
     public function getAll(string $sql): array
     {
         $result = mysqli_query($this->connection, $sql);
@@ -38,5 +44,15 @@ class Connection
             }
         }
         return $data;
+    }
+
+    public function delete(string $sql): bool
+    {
+        $result = mysqli_query($this->connection, $sql);
+        if($result !== false)
+        {
+            return false;
+        }
+        return true;
     }
 }
