@@ -12,7 +12,6 @@ class QuestionSQLBuilder
 
     public function buildUpdate(Question $question, $rowId): string
     {
-        print_r($question);
         return "UPDATE questions SET question = '{$question->getQuestion()}' WHERE id = '{$rowId}'";
     }
 

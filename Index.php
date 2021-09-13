@@ -35,6 +35,7 @@ $radioButton0 = "checked";
 $radioButton1 = "";
 $buttonValue = "save";
 $action = "0";
+$answers = [];
 
 if(isset($_POST["action"])){
     $action = "1";
@@ -69,17 +70,6 @@ if($currentAction === "create")
 }
 elseif ($currentAction == "update")
 {
-    if ($isSended)
-    {
-        echo "foo";
-        if(true)
-        {
-            $update = new Update();
-            if(!$update->update($_GET["questionId"], $_POST)) echo "Error [Update cannot be processed]";
-            header("Location: index.php");
-            exit();
-        }
-    }
 
     echo "Editing question with id: ".$_GET["questionId"];
     $fillInputTable->fill($_GET["questionId"], $inputTable);
@@ -93,6 +83,21 @@ elseif ($currentAction == "update")
     $checkBox1 = $inputTable->getCheckBoxAnswer1();
     $checkBox2 = $inputTable->getCheckBoxAnswer2();
 
+    $answers = [0 => $txtAns0,
+        1 => $txtAns1,
+        2 => $txtAns2,
+        3 => $checkBox0,
+        4 => $checkBox1,
+        5 => $checkBox2];
+
+    if ($isSended)
+    {
+        if(true)
+        {
+            $update = new Update();
+            if(!$update->update($_GET["questionId"], $answers, $radioButton1)) echo "Error [Update cannot be processed]";
+        }
+    }
 }
 elseif ($currentAction == "delete")
 {
@@ -128,14 +133,12 @@ elseif ($currentAction == "delete")
             <td><input type="text" name="txtAns2" value="<?php echo $txtAns2?>"></td>
             <td><input type="checkbox" name="check[2]" <?php echo $checkBox2?>></td>
         </tr>
-        <tr><td></td><td><input type="submit" name="Submit" id="Submit" value="<?php echo $buttonValue?>"></td></tr>
+        <tr><td></td><td><a href="?answers=gay"><input type="submit" name="Submit" id="Submit" value="<?php echo $buttonValue?>"></td></tr>
     </table>
 </form>
 <?php
-
-
 $drawDatabases = new DrawDatabases();
-$drawDatabases->draw();
+$drawDatabases->draw($answers);
 ?>
 </body>
 </html>

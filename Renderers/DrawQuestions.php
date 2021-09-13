@@ -2,9 +2,9 @@
 
 namespace Renderers;
 use DB\Connection;
+use SQLBuilders\AnswerSQLBuilder;
 use SQLBuilders\QuestionSQLBuilder;
 use Mappers\QuestionMapper;
-use Operation\Filler;
 
 class DrawQuestions
 {
@@ -28,11 +28,10 @@ class DrawQuestions
                     <td><input type="submit" name="questionId" value="<?php echo $question->getId() ?>"></td>
                     <td><?php echo $question->getQuestion() ?></td>
                     <td><?php echo $question->getType() ?></td>
-                    <td><a href="?action=update&questionId=<?php echo $question->getId() ?>">Edit</a></td>
+                    <td><a href="?action=update&questionId=<?php echo $question->getId()?>">Edit</a></td>
                     <td><a href="?action=delete&questionId=<?php echo $question->getId() ?>">Delete</a></td>
                 </tr>
                 <?php
-
             }
             ?></tbody><?php
             ?></table><?php

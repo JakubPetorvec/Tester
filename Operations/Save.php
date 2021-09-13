@@ -3,7 +3,7 @@
 namespace Operations;
 
 use \AnswerTypes;
-use \DataValidation;
+use Validators\DataValidation;
 use DB\Connection;
 use Parsers\QuestionParser;
 use SQLBuilders\QuestionSQLBuilder;

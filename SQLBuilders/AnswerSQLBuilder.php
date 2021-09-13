@@ -20,8 +20,13 @@ class AnswerSQLBuilder
         return "SELECT * FROM answers WHERE question_id = {$rowId} ";
     }
 
-    public  function buildUpdate(Answer $answer, $rowId):string
+    public function buildGetRowsByQuestionId($questionId): string
     {
-        return "UPDATE questions SET question = 'Testasd', `type` = '0' WHERE questions.id = {$rowId}";
+        return "SELECT * FROM answers WHERE question_id = '{$questionId}'";
+    }
+
+    public  function buildUpdate(Answer $answer, int $rowId, string $previousAnswer):string
+    {
+        return "UPDATE answers SET answer = '{$answer->getAnswer()}', value = '{$answer->getValue()}' WHERE question_id = '{$rowId}' AND answer LIKE '{$previousAnswer}'";
     }
 }

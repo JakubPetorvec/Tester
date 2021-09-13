@@ -1,4 +1,9 @@
 <?php
+
+namespace Validators;
+
+use \AnswerTypes;
+
 class DataValidation
 {
     public function validateData($postData, &$errors):bool
