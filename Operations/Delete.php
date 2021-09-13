@@ -7,7 +7,7 @@ use SQLBuilders\QuestionSQLBuilder;
 
 class Delete
 {
-    public function delete($rowId)
+    public function delete($rowId):void
     {
         $connection = new Connection();
 
@@ -16,7 +16,9 @@ class Delete
             $questionSQLBuilder = new QuestionSQLBuilder();
             $deleteQuestion = $questionSQLBuilder->buildDeleteRowById($rowId);
 
-            return $connection->delete($deleteQuestion);
+            $connection->delete($deleteQuestion);
+            header("Location: index.php?action=create");
+            exit();
         }
     }
 }

@@ -40,7 +40,7 @@ class Save
                     $insertSql = $answerSqlBuilder->buildInsert($answer);
                     $connection->insert($insertSql);
                 }
-                header("Location: index.php");
+                header("Location: index.php?action=create");
                 exit();
             }
         }

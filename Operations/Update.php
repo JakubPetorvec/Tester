@@ -40,7 +40,7 @@ class Update
                     $connection->update($insertSql);
                 }
             }
-            header("Location: index.php");
+            header("Location: index.php?action=create");
             exit();
         }
         ?><table class="table-errors"><?php

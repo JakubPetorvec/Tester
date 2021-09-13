@@ -2,7 +2,6 @@
 
 namespace Renderers;
 use DB\Connection;
-use SQLBuilders\AnswerSQLBuilder;
 use SQLBuilders\QuestionSQLBuilder;
 use Mappers\QuestionMapper;
 
