@@ -70,7 +70,6 @@ if($currentAction === "create")
 }
 elseif ($currentAction == "update")
 {
-
     echo "Editing question with id: ".$_GET["questionId"];
     $fillInputTable->fill($_GET["questionId"], $inputTable);
     $txtQuestion = $inputTable->getQuestion();
@@ -82,7 +81,6 @@ elseif ($currentAction == "update")
     $checkBox0 = $inputTable->getCheckBoxAnswer0();
     $checkBox1 = $inputTable->getCheckBoxAnswer1();
     $checkBox2 = $inputTable->getCheckBoxAnswer2();
-
     $answers = [0 => $txtAns0,
         1 => $txtAns1,
         2 => $txtAns2,
@@ -92,11 +90,8 @@ elseif ($currentAction == "update")
 
     if ($isSended)
     {
-        if(true)
-        {
-            $update = new Update();
-            if(!$update->update($_GET["questionId"], $answers, $radioButton1)) echo "Error [Update cannot be processed]";
-        }
+        $update = new Update();
+        if(!$update->update($_GET["questionId"], $answers, $radioButton1)) echo "Error [Update cannot be processed]";
     }
 }
 elseif ($currentAction == "delete")
@@ -138,7 +133,7 @@ elseif ($currentAction == "delete")
 </form>
 <?php
 $drawDatabases = new DrawDatabases();
-$drawDatabases->draw($answers);
+$drawDatabases->draw();
 ?>
 </body>
 </html>
