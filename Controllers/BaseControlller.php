@@ -4,7 +4,7 @@ namespace Controllers;
 
 abstract class BaseControlller
 {
-    protected function view(string $file, $model = null, $errors = null)
+    protected function view(string $file, $model = null, $errors = null, $answers = null)
     {
         $className = get_class($this);
         $controllerName = substr($className, strlen("Controllers\\"));

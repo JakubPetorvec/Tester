@@ -94,7 +94,6 @@ class QuestionController extends BaseControlller
         $isSended = false;
         if (isset($_POST["sended"])) $isSended = $_POST["sended"];
 
-
         $txtQuestion = "";
         $txtAns0 = "";
         $txtAns1 = "";
