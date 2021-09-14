@@ -17,8 +17,6 @@ class Delete
             $deleteQuestion = $questionSQLBuilder->buildDeleteRowById($rowId);
 
             $connection->delete($deleteQuestion);
-            header("Location: index.php?controller=Question");
-            exit();
         }
     }
 }

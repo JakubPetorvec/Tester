@@ -10,6 +10,8 @@ use Operations\Filler;
 use Operations\Save;
 use Operations\Update;
 use SQLBuilders\QuestionSQLBuilder;
+use Validators\AnswerValidator;
+use Validators\DataValidation;
 
 class QuestionController extends BaseControlller
 {
@@ -32,6 +34,7 @@ class QuestionController extends BaseControlller
 
     public function createAction()
     {
+        $myErrors = [];
         $isSended = false;
         if (isset($_POST["sended"])) $isSended = $_POST["sended"];
         $txtQuestion = "";
@@ -48,8 +51,15 @@ class QuestionController extends BaseControlller
 
         if($isSended)
         {
-            $save = new Save();
-            $save->save($_POST);
+            $isValid = new DataValidation();
+
+            if($isValid->validateData($_POST,$myErrors))
+            {
+                $save = new Save();
+                $save->save($_POST);
+                header("Location: index.php?controller=Question");
+                exit();
+            }
             $txtQuestion = $_POST["txtQuestion"];
             $txtAns0 = $_POST["txtAns0"];
             $txtAns1 = $_POST["txtAns1"];
@@ -72,14 +82,15 @@ class QuestionController extends BaseControlller
             $inputTable->setRadioButton($radioButton0);
             $inputTable->setRadioText($radioButton1);
 
-            $this->view("Create.php", $inputTable);
+            $this->view("Create.php", $inputTable, $myErrors);
         }
         else
-            $this->view("Create.php", new InputTable());
+            $this->view("Create.php", new InputTable(), $myErrors);
     }
 
     public function updateAction()
     {
+        $myErrors = [];
         $isSended = false;
         if (isset($_POST["sended"])) $isSended = $_POST["sended"];
 
@@ -116,16 +127,23 @@ class QuestionController extends BaseControlller
 
         if ($isSended)
         {
+            $isValid = new AnswerValidator();
             $update = new Update();
-            if(!$update->update($_POST, $_GET["questionId"], $answers, $radioButton1)) echo "Error [Update cannot be processed]";
+            if($isValid->validate($_POST, $myErrors) && $_POST["type"] === "button")
+            {
+                $update->update($_POST, $_GET["questionId"], $answers, $radioButton1);
+                header("Location: index.php?controller=Question");
+                exit();
+            }
         }
-
-        $this->view("Update.php", $inputTable);
+        $this->view("Update.php", $inputTable, $myErrors);
     }
 
     public function deleteAction()
     {
         $delete = new Delete();
         $delete->delete($_GET["questionId"]);
+        header("Location: index.php?controller=Question");
+        exit();
     }
 }

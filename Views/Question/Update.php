@@ -2,10 +2,15 @@
 
 use Model\InputTable;
 
-if (!isset($model))
-    $model = new InputTable();
+if (!isset($model)) $model = new InputTable();
+if (!isset($errors)) $errors = [];
 
-?>
+?><table><?php
+    foreach ($errors as $error)
+    {
+        ?><tr><td> <?php echo $error?></td></tr><?php
+    }
+    ?></table>
 
 <form name="frmSave" method="post">
     <input type="hidden" name="sended" value="1">

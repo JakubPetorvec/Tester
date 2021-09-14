@@ -53,8 +53,6 @@ class Filler
 
                     if($answerRows[2]["value"] == "1") $inputTable->setCheckBoxAnswer2("checked");
                     else $inputTable->setCheckBoxAnswer2("");
-
-
                 }
                 else
                 {
@@ -63,12 +61,7 @@ class Filler
                 }
             }
             return true;
-
         }
-        echo "Error [No Data in Table!]";
         return false;
-
-
-
     }
 }

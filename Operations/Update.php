@@ -8,19 +8,14 @@ use Parsers\QuestionParser;
 use SQLBuilders\QuestionSQLBuilder;
 use SQLBuilders\AnswerSQLBuilder;
 use Validators\AnswerValidator;
-use \AnswerTypes;
 
 class Update
 {
-    public function update(array $postData, $rowId, array $answers, string $radioButton1):bool
+    public function update(array $postData, $rowId, array $answers):bool
     {
         $connection = new Connection();
-        $isValid = new AnswerValidator();
-        $myErrors = [];
 
-        if($radioButton1 !== "checked") $isValid->validate($myErrors);
-
-        if($connection->connect() === true && empty($myErrors))
+        if($connection->connect() === true)
         {
             $questionParser = new QuestionParser();
             $question = $questionParser->parse($postData);
@@ -28,27 +23,16 @@ class Update
             $questionSqlBuilder = new QuestionSqlBuilder();
             $updateSql = $questionSqlBuilder->buildUpdate($question, $rowId);
             $connection->update($updateSql);
-            if($radioButton1 !== "checked")
+            for($i = 0; $i < 3; $i++)
             {
-                for($i = 0; $i < 3; $i++)
-                {
-                    $answerParser = new AnswerParser();
-                    $answer = $answerParser->parse($postData, $rowId, $i);
+                $answerParser = new AnswerParser();
+                $answer = $answerParser->parse($postData, $rowId, $i);
 
-                    $answerSqlBuilder = new AnswerSQLBuilder();
-                    $insertSql = $answerSqlBuilder->buildUpdate($answer, $rowId, $answers[$i]);
-                    $connection->update($insertSql);
-                }
+                $answerSqlBuilder = new AnswerSQLBuilder();
+                $insertSql = $answerSqlBuilder->buildUpdate($answer, $rowId, $answers[$i]);
+                $connection->update($insertSql);
             }
-            header("Location: index.php?controller=Question");
-            exit();
         }
-        ?><table class="table-errors"><?php
-        foreach ($myErrors as $error)
-        {
-            ?><tr><td><?php echo $error ?></td></tr><?php
-        }
-        ?></table><?php
-        return false;
+        return true;
     }
 }

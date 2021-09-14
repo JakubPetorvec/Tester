@@ -21,8 +21,6 @@ if (isset($_GET["action"])) $currentAction = $_GET["action"];
 
 $controllerClass = "Controllers\\".$currentController."Controller";
 
-//echo "Try to load class{$controllerClass}<br/>";
-
 if (class_exists($controllerClass))
 {
     $controller = new $controllerClass();

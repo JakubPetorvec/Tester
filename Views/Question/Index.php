@@ -5,7 +5,10 @@ if (!isset($model))
 }
 ?>
 <form method="get">
-    <a href="Index.php?controller=Question&action=create">Přidat otázku</a>
+    <table>
+        <tr><h4><a href="Index.php?controller=Question&action=create">Add question</a></h4>
+        <tr><h4><a href="Index.php">Menu</a></h4></tr></tr>
+    </table>
     <table class="question-table">
         <thead><tr><th>ID</th><th>Question</th><th>Type</th><th>EDIT</th><th>DELETE</th></tr></thead>
         <tbody>

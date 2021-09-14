@@ -28,11 +28,20 @@ class DataValidation
                 }
             }
 
-            if(!isset($postData["check"]))
+            if(isset($postData["check"]))
+            {
+                if(count($postData["check"]) > 1)
+                {
+                    $isValidate = false;
+                    array_push($errors, "Only one Answer can be right!");
+                }
+            }
+            else
             {
                 $isValidate = false;
                 array_push($errors, "No right Answers!");
             }
+
 
             return $isValidate;
         }
