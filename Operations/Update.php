@@ -12,7 +12,7 @@ use \AnswerTypes;
 
 class Update
 {
-    public function update($rowId, array $answers, string $radioButton1):bool
+    public function update(array $postData, $rowId, array $answers, string $radioButton1):bool
     {
         $connection = new Connection();
         $isValid = new AnswerValidator();
@@ -23,7 +23,7 @@ class Update
         if($connection->connect() === true && empty($myErrors))
         {
             $questionParser = new QuestionParser();
-            $question = $questionParser->parse($_POST);
+            $question = $questionParser->parse($postData);
 
             $questionSqlBuilder = new QuestionSqlBuilder();
             $updateSql = $questionSqlBuilder->buildUpdate($question, $rowId);
@@ -33,14 +33,14 @@ class Update
                 for($i = 0; $i < 3; $i++)
                 {
                     $answerParser = new AnswerParser();
-                    $answer = $answerParser->parse($_POST, $rowId, $i);
+                    $answer = $answerParser->parse($postData, $rowId, $i);
 
                     $answerSqlBuilder = new AnswerSQLBuilder();
                     $insertSql = $answerSqlBuilder->buildUpdate($answer, $rowId, $answers[$i]);
                     $connection->update($insertSql);
                 }
             }
-            header("Location: index.php?action=create");
+            header("Location: index.php?controller=Question");
             exit();
         }
         ?><table class="table-errors"><?php
