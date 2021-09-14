@@ -3,12 +3,12 @@ if (!isset($model)) $model = [];
 if (!isset($errors)) $errors = [];
 
 ?><table><?php
+?><tr><h4><a href="Index.php?controller=Question&action=index">Questions</a></h4></tr></tr><?php
 foreach ($errors as $error)
 {
  ?><tr><td> <?php echo $error?></td></tr><?php
 }
 ?></table>
-
 <form name="frmSave" method="post">
     <input type="hidden" name="sended" value="1">
     <table class="input-table">

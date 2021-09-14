@@ -109,12 +109,10 @@ class QuestionController extends BaseControlller
 
         $fillInputTable = new Filler();
         $inputTable = new InputTable();
-        echo "Editing question with id: ".$_GET["questionId"];
         $fillInputTable->fill($_GET["questionId"], $inputTable);
         $txtAns0 = $inputTable->getAnswer0();
         $txtAns1 = $inputTable->getAnswer1();
         $txtAns2 = $inputTable->getAnswer2();
-        $radioButton1 = $inputTable->getRadioText();
         $checkBox0 = $inputTable->getCheckBoxAnswer0();
         $checkBox1 = $inputTable->getCheckBoxAnswer1();
         $checkBox2 = $inputTable->getCheckBoxAnswer2();
@@ -131,7 +129,7 @@ class QuestionController extends BaseControlller
             $update = new Update();
             if($isValid->validate($_POST, $myErrors) && $_POST["type"] === "button")
             {
-                $update->update($_POST, $_GET["questionId"], $answers, $radioButton1);
+                $update->update($_POST, $_GET["questionId"], $answers);
                 header("Location: index.php?controller=Question");
                 exit();
             }

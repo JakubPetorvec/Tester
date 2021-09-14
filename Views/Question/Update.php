@@ -6,6 +6,8 @@ if (!isset($model)) $model = new InputTable();
 if (!isset($errors)) $errors = [];
 
 ?><table><?php
+?><tr><h4><a href="Index.php?controller=Question&action=index">Questions</a></h4></tr><?php
+    ?><tr><h4>Editing question with id : <?php echo $model->getQuestionId()?></h4></tr><?php
     foreach ($errors as $error)
     {
         ?><tr><td> <?php echo $error?></td></tr><?php
