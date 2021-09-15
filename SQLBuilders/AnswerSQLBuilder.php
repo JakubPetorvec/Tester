@@ -25,6 +25,11 @@ class AnswerSQLBuilder
         return "SELECT * FROM answers WHERE question_id = '{$questionId}'";
     }
 
+    public function buildGetAnswersByQuestionId($questionId): string
+    {
+        return "SELECT answer FROM answers WHERE question_id = '{$questionId}'";
+    }
+
     public  function buildUpdate(Answer $answer, int $rowId, string $previousAnswer):string
     {
         return "UPDATE answers SET answer = '{$answer->getAnswer()}', value = '{$answer->getValue()}' WHERE question_id = '{$rowId}' AND answer LIKE '{$previousAnswer}'";

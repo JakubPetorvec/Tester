@@ -1,47 +1,21 @@
 <?php
-if(!isset($model)) $model = [];
-if(!isset($answers)) $answers = [];
+if (!isset($model)) $model = [];
 ?>
-
-<table>
-    <tr>
-        <td>Name</td>
-        <td><input type="text"></td>
-        <td><?php echo "Date : ".date('d.m.20y')?></td>
-    </tr>
-</table>
 
 <form>
     <table>
+        <tr><td><h4>Test ID</h4></td><td><h4>Test name</h4></td></tr>
         <?php
-        $counter = 0;
-        foreach ($model["questions"] as $question)
+        foreach ($model as $test)
         {
             ?><tr>
-            <td><input type="text" readonly value="<?php echo $question->getQuestion()?>"></td>
-            <?php
-            if($question->getType() == "0")
-            {
-                ?><td><input type="text"></td><?php
-            }
-            else{
-                ?><td><select>
-                    <?php
-                    for ($i = 0; $i < 3; $i++){
-                        $answer = $answers[$counter][$i]["answer"];
-                        ?><option value="<?php echo $answer?>"><?php echo $answer?></option><?php
-                    }
-                    ?>
-                    </select></td><?php
-            }
-            ?>
-            </tr><?php
-            $counter++;
+                <td><?php echo $test["id"]?></td>
+                <td><?php echo $test["name"]?></td>
+                <td><a href="index.php?controller=Test&action=edit&test_id=<?php echo $test["id"]?>">Select</a></td>
+
+        </tr><?php
         }
+
         ?>
-        <tr><td><input type="submit" value="Send Answers"></td></tr>
     </table>
 </form>
-
-
-
