@@ -11,7 +11,7 @@ use SQLBuilders\AnswerSQLBuilder;
 
 class Save
 {
-    public function save(array $postData):void
+    public function save(array $postData, array $getData):void
     {
         $connection = new Connection();
 
@@ -21,7 +21,7 @@ class Save
             $question = $questionParser->parse($postData);
 
             $questionSqlBuilder = new QuestionSqlBuilder();
-            $insertSql = $questionSqlBuilder->buildInsert($question);
+            $insertSql = $questionSqlBuilder->buildInsert($question, $getData["test_id"]);
 
             $questionId = $connection->insert($insertSql);
 

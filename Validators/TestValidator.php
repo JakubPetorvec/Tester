@@ -4,24 +4,24 @@ namespace Validators;
 
 class TestValidator
 {
-    public function validate($postData, &$errors):bool
+    public function validate($postData, array &$error) : bool
     {
         $isValid = true;
-        $counter = 1;
-        if($postData["name"] == "")
+
+        if($postData["testName"] === ""){
+            $isValid = false;
+            array_push($error, "Missing test name!");
+        }
+        if($postData["testPercentage"] === "")
         {
             $isValid = false;
-            array_push($errors, "Name is missing!");
-        }
+            array_push($error, "Missing test percentage!");
 
-        foreach ($postData["answers"] as $answers)
+        }
+        else if (intval($postData["testPercentage"]) == "0")
         {
-            if($answers == "")
-            {
-                $isValid = false;
-                array_push($errors, "Answer {$counter} is Missing!");
-            }
-            $counter++;
+            $isValid = false;
+            array_push($error, "Test percentage has to be in range <1% - 100%>!");
         }
         return $isValid;
     }

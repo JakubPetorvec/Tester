@@ -5,8 +5,10 @@ namespace Entities;
 class Question
 {
     private int $id;
+    private int $testId;
     private string $question;
     private int $type;
+
 
     /**
      * @return int
@@ -55,4 +57,21 @@ class Question
     {
         $this->type = $type;
     }
+
+    /**
+     * @return int
+     */
+    public function getTestId(): int
+    {
+        return $this->testId;
+    }
+
+    /**
+     * @param int $testId
+     */
+    public function setTestId(int $testId): void
+    {
+        $this->testId = $testId;
+    }
+
 }

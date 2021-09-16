@@ -12,7 +12,7 @@ if(!isset($errors)) $errors = [];
     ?></tr>
 </table>
 
-<form method="post" action="Index.php?controller=Exam&action=create&valid=true">
+<form method="post" action="Index.php?controller=Exam&action=index&valid=true&test_id=<?php echo $_GET["test_id"]?>">
 
     <table>
         <tr>

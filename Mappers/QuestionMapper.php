@@ -9,6 +9,7 @@ class QuestionMapper
     {
         $result = new Question();
         $result->setId($row["id"]);
+        $result->setTestId($row["test_id"]);
         $result->setQuestion($row["question"]);
         $result->setType($row["type"]);
         return $result;

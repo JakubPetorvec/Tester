@@ -3,7 +3,7 @@ if (!isset($model)) $model = [];
 if (!isset($errors)) $errors = [];
 
 ?><table><?php
-?><tr><h4><a href="Index.php?controller=Question&action=index">Questions</a></h4></tr></tr><?php
+?><tr><h4><a href="Index.php?controller=Question&action=index&test_id=<?php echo $_GET["test_id"]?>">Questions</a></h4></tr></tr><?php
 foreach ($errors as $error)
 {
  ?><tr><td> <?php echo $error?></td></tr><?php

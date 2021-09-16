@@ -21,14 +21,12 @@ class QuestionController extends BaseControlller
 
         $connection = new Connection();
         $connection->connect();
-        $questionsData = $connection->getAll($sqlBuilder->buildGetAll());
+        $questionsData = $connection->getAll($sqlBuilder->buildGetAll($_GET["test_id"]));
         $questions = [];
-
         foreach ($questionsData as $question)
         {
             $questions[] = QuestionMapper::map($question);
         }
-
         $this->view("Index.php", ['questions' => $questions]);
     }
 
@@ -56,8 +54,8 @@ class QuestionController extends BaseControlller
             if($isValid->validateData($_POST,$myErrors))
             {
                 $save = new Save();
-                $save->save($_POST);
-                header("Location: index.php?controller=Question");
+                $save->save($_POST, $_GET);
+                header("Location: index.php?controller=Question&action=index&test_id={$_GET["test_id"]}");
                 exit();
             }
             $txtQuestion = $_POST["txtQuestion"];
@@ -129,7 +127,7 @@ class QuestionController extends BaseControlller
             if($isValid->validate($_POST, $myErrors) && $_POST["type"] === "button")
             {
                 $update->update($_POST, $_GET["questionId"], $answers);
-                header("Location: index.php?controller=Question");
+                header("Location: index.php?controller=Question&action=index&test_id={$_GET["test_id"]}");
                 exit();
             }
         }
@@ -140,7 +138,7 @@ class QuestionController extends BaseControlller
     {
         $delete = new Delete();
         $delete->delete($_GET["questionId"]);
-        header("Location: index.php?controller=Question");
+        header("Location: index.php?controller=Question&action=index&test_id={$_GET["test_id"]}");
         exit();
     }
 }

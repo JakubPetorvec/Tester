@@ -13,7 +13,7 @@ spl_autoload_register(function ($class){
     if(file_exists($filePath)) include_once ($filePath);
 });
 
-$currentController = "Dashboard";
+$currentController = "Test";
 $currentAction = "index";
 
 if (isset($_GET["controller"])) $currentController = $_GET["controller"];
