@@ -2,7 +2,7 @@
 
 namespace Entities;
 
-class Question
+class Question extends BaseEntity
 {
     private int $id;
     private int $testId;

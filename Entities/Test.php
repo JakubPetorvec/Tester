@@ -2,7 +2,7 @@
 
 namespace Entities;
 
-class Test
+class Test extends BaseEntity
 {
     private string $testName;
     private string $testPercentage;

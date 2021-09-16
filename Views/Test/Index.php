@@ -1,5 +1,8 @@
 <?php
-if (!isset($model)) $model = [];
+
+use Entities\Test;
+
+if (!isset($model)) $model = new Test();
 ?>
 
 <a href="index.php?controller=Test&action=create"><h4>Create new test</h4></a>
@@ -11,12 +14,12 @@ if (!isset($model)) $model = [];
         foreach ($model as $test)
         {
             ?><tr>
-                <td><?php echo $test["id"]?></td>
-                <td><?php echo $test["name"]?></td>
-                <td><?php echo $test["percentage"]?>%</td>
-                <td><a href="index.php?controller=Question&action=index&test_id=<?php echo $test["id"]?>">Edit</a></td>
-                <td><a href="index.php?controller=Exam&action=index&test_id=<?php echo $test["id"]?>">Take</a></td>
-                <td><a href="index.php?controller=Test&action=delete&test_id=<?php echo $test["id"]?>">Delete</a></td>
+                <td><?php echo $test->getId()?></td>
+                <td><?php echo $test->getTestName()?></td>
+                <td><?php echo $test->getTestPercentage()?>%</td>
+                <td><a href="index.php?controller=Question&action=index&test_id=<?php echo $test->getId()?>">Edit</a></td>
+                <td><a href="index.php?controller=Exam&action=index&test_id=<?php echo $test->getId()?>">Take</a></td>
+                <td><a href="index.php?controller=Test&action=delete&test_id=<?php echo $test->getId()?>">Delete</a></td>
 
         </tr><?php
         }
