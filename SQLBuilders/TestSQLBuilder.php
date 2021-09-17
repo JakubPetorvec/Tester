@@ -13,7 +13,7 @@ class TestSQLBuilder
 
     public function buildInsert(Test $test) :string
     {
-        return "INSERT INTO tests (name, percentage) VALUES ('{$test->getTestName()}', '{$test->getTestPercentage()}')";
+        return "INSERT INTO tests (name, percentage) VALUES ('{$test->getName()}', '{$test->getPercentage()}')";
     }
 
     public function buildDelete($testId) :string

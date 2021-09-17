@@ -24,10 +24,16 @@ $controllerClass = "Controllers\\".$currentController."Controller";
 if (class_exists($controllerClass))
 {
     $controller = new $controllerClass();
+    $sended = array_key_exists("sended", $_POST);
+    $sendedPostfix = $sended ? "Post" : "";
 
-    $controllerMethod = "{$currentAction}Action";
+
+
+    $controllerMethod = "{$currentAction}Action{$sendedPostfix}";
     if (method_exists($controller, $controllerMethod))
+    {
         $controller->$controllerMethod();
+    }
     else
         die ("Method does not exists!");
 }

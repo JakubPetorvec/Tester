@@ -4,7 +4,7 @@ namespace Entities;
 
 class BaseEntity
 {
-    private int $id;
+    private int $id = 0;
 
     /**
      * @return int

@@ -5,9 +5,9 @@ use Entities\Question;
 
 class QuestionSQLBuilder
 {
-    public function buildInsert(Question $question, int $testId): string
+    public function buildInsert(Question $question): string
     {
-        return "INSERT INTO questions (test_id, question, type) VALUES ('{$testId}', '{$question->getQuestion()}', '{$question->getType()}')";
+        return "INSERT INTO questions (test_id, question, type) VALUES ('{$question->getTestId()}', '{$question->getQuestion()}', '{$question->getType()}')";
     }
 
     public function buildUpdate(Question $question, $rowId): string

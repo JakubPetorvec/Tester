@@ -4,55 +4,57 @@ namespace Model;
 
 class CreateTest
 {
-    private int $testId = 0;
-    private string $testName = "";
-    private string $testPercentage = "";
-
-    /**
-     * @return string
-     */
-    public function getTestName(): string
-    {
-        return $this->testName;
-    }
-
-    /**
-     * @param string $testName
-     */
-    public function setTestName(string $testName): void
-    {
-        $this->testName = $testName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTestPercentage(): string
-    {
-        return $this->testPercentage;
-    }
-
-    /**
-     * @param string $testPercentage
-     */
-    public function setTestPercentage(string $testPercentage): void
-    {
-        $this->testPercentage = $testPercentage;
-    }
+    private int $id = 0;
+    private string $name = "";
+    private string $percentage = "";
 
     /**
      * @return int
      */
-    public function getTestId(): int
+    public function getId(): int
     {
-        return $this->testId;
+        return $this->id;
     }
 
     /**
-     * @param int $testId
+     * @param int $id
      */
-    public function setTestId(int $testId): void
+    public function setId(int $id): void
     {
-        $this->testId = $testId;
+        $this->id = $id;
     }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPercentage(): string
+    {
+        return $this->percentage;
+    }
+
+    /**
+     * @param string $percentage
+     */
+    public function setPercentage(string $percentage): void
+    {
+        $this->percentage = $percentage;
+    }
+
+
 }

@@ -1,13 +1,16 @@
 <?php
 
-use Model\InputTable;
+use Entities\Answer;
+use Entities\Question;
 
-if (!isset($model)) $model = new InputTable();
+if (!isset($model))
+{
+    $model["question"] = new Question();
+    $model["answers"] = new Answer();
+}
 if (!isset($errors)) $errors = [];
-
 ?><table><?php
-?><tr><h4><a href="Index.php?controller=Question&action=index&test_id=<?php echo $_GET["test_id"]?>">Questions</a></h4></tr><?php
-    ?><tr><h4>Editing question with id : <?php echo $model->getQuestionId()?></h4></tr><?php
+?><tr><h4><a href="Index.php?controller=Question&action=index&test_id=<?php echo $model["question"]->getTestId()?>&question_id=<?php echo $model["question"]->getId()?>">Questions</a></h4></tr><?php
     foreach ($errors as $error)
     {
         ?><tr><td> <?php echo $error?></td></tr><?php
@@ -19,27 +22,9 @@ if (!isset($errors)) $errors = [];
     <table class="input-table">
         <tr>
             <td><label>Question</label></td>
-            <td><input type="text" name="txtQuestion" value="<?php echo $model->getQuestion(); ?>"></td>
+            <td><input type="text" name="txtQuestion" value="<?php echo $model["question"]->getQuestion(); ?>"></td>
         </tr>
-        <tr>
-            <td><label>Button Type<input type="radio" name="type" value="button" <?php echo $model->getRadioButton(); ?>></label></td>
-            <td><label>Textbox Type<input type="radio" name="type" value="textbox" <?php echo $model->getRadioText(); ?>></label></td>
-        </tr>
-        <tr>
-            <td><label>Answer</label></td>
-            <td><input type="text" name="txtAns0" value="<?php echo $model->getAnswer0(); ?>"></td>
-            <td><input type="checkbox" name="check[0]" <?php echo $model->getCheckBoxAnswer0(); ?>></td>
-        </tr>
-        <tr>
-            <td><label>Answer</label></td>
-            <td><input type="text" name="txtAns1" value="<?php echo $model->getAnswer1(); ?>"></td>
-            <td><input type="checkbox" name="check[1]" <?php echo $model->getCheckBoxAnswer1(); ?>></td>
-        </tr>
-        <tr>
-            <td><label>Answer</label></td>
-            <td><input type="text" name="txtAns2" value="<?php echo $model->getAnswer2(); ?>"></td>
-            <td><input type="checkbox" name="check[2]" <?php echo $model->getCheckBoxAnswer2(); ?>></td>
-        </tr
         <tr><td></td><td><input type="submit" name="Submit" id="Submit" value="Uložit"></td></tr>
+        <tr><td>UDĚLAT ODPOVĚDI</td></tr>
     </table>
 </form>

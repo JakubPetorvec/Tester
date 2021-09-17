@@ -20,8 +20,8 @@ if (!isset($model))
                 <td> <?php echo $question->getId(); ?> </td>
                 <td> <?php echo $question->getQuestion(); ?> </td>
                 <td> <?php echo $question->getType(); ?> </td>
-                <td><a href="?controller=Question&action=update&questionId=<?php echo $question->getId(); ?>&test_id=<?php echo $_GET["test_id"]?>">Edit</a></td>
-                <td><a href="?controller=Question&action=delete&questionId=<?php echo $question->getId(); ?>&test_id=<?php echo $_GET["test_id"]?>">Delete</a></td>
+                <td><a href="?controller=Question&action=update&question_id=<?php echo $question->getId(); ?>&test_id=<?php echo $_GET["test_id"]?>">Edit</a></td>
+                <td><a href="?controller=Question&action=delete&question_id=<?php echo $question->getId(); ?>&test_id=<?php echo $_GET["test_id"]?>">Delete</a></td>
             </tr>
             <?php
         }

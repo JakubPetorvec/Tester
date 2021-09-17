@@ -2,23 +2,25 @@
 
 namespace Validators;
 
+use Entities\Test;
+
 class TestValidator
 {
-    public function validate($postData, array &$error) : bool
+    public function validate(Test $testData, array &$error) : bool
     {
         $isValid = true;
 
-        if($postData["testName"] === ""){
+        if($testData->getName() === ""){
             $isValid = false;
             array_push($error, "Missing test name!");
         }
-        if($postData["testPercentage"] === "")
+        if($testData->getPercentage() === "")
         {
             $isValid = false;
             array_push($error, "Missing test percentage!");
 
         }
-        else if (intval($postData["testPercentage"]) == "0")
+        if ((int)$testData->getPercentage() == 0)
         {
             $isValid = false;
             array_push($error, "Test percentage has to be in range <1% - 100%>!");

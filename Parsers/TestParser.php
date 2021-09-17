@@ -6,11 +6,11 @@ use Entities\Test;
 
 class TestParser
 {
-    public function parse($postData): Test
+    public static function parse($postData): Test
     {
         $test = new Test();
-        $test->setTestName($postData["testName"]);
-        $test->setTestPercentage($postData["testPercentage"]);
+        $test->setName($postData["name"]);
+        $test->setPercentage($postData["percentage"]);
         return $test;
     }
 }

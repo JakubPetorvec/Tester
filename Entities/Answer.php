@@ -4,7 +4,7 @@ namespace Entities;
 
 class Answer extends BaseEntity
 {
-    private int $id;
+    private int $testId;
     private int $questionId;
     private string $answer;
     private int $value;
@@ -71,6 +71,22 @@ class Answer extends BaseEntity
     public function setValue(int $value): void
     {
         $this->value = $value;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTestId(): int
+    {
+        return $this->testId;
+    }
+
+    /**
+     * @param int $testId
+     */
+    public function setTestId(int $testId): void
+    {
+        $this->testId = $testId;
     }
 
 }

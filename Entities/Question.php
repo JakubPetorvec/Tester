@@ -4,27 +4,9 @@ namespace Entities;
 
 class Question extends BaseEntity
 {
-    private int $id;
-    private int $testId;
-    private string $question;
-    private int $type;
-
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
+    private int $testId = 0;
+    private string $question = "";
+    private string $type = "";
 
     /**
      * @return string
@@ -45,22 +27,6 @@ class Question extends BaseEntity
     /**
      * @return int
      */
-    public function getType(): int
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param int $type
-     */
-    public function setType(int $type): void
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * @return int
-     */
     public function getTestId(): int
     {
         return $this->testId;
@@ -72,6 +38,22 @@ class Question extends BaseEntity
     public function setTestId(int $testId): void
     {
         $this->testId = $testId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType(string $type): void
+    {
+        $this->type = $type;
     }
 
 }

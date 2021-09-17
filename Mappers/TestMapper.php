@@ -11,8 +11,8 @@ class TestMapper
         $test = new Test();
 
         $test->setId($postData["id"]);
-        $test->setTestName($postData["name"]);
-        $test->setTestPercentage($postData["percentage"]);
+        $test->setName($postData["name"]);
+        $test->setPercentage($postData["percentage"]);
 
         return $test;
     }

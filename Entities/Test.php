@@ -4,38 +4,39 @@ namespace Entities;
 
 class Test extends BaseEntity
 {
-    private string $testName;
-    private string $testPercentage;
+    private string $name = "";
+    private string $percentage = "";
 
     /**
      * @return string
      */
-    public function getTestName(): string
+    public function getName(): string
     {
-        return $this->testName;
+        return $this->name;
     }
 
     /**
-     * @param string $testName
+     * @param string $name
      */
-    public function setTestName(string $testName): void
+    public function setName(string $name): void
     {
-        $this->testName = $testName;
+        $this->name = $name;
     }
 
     /**
      * @return string
      */
-    public function getTestPercentage(): string
+    public function getPercentage(): string
     {
-        return $this->testPercentage;
+        return $this->percentage;
     }
 
     /**
-     * @param string $testPercentage
+     * @param string $percentage
      */
-    public function setTestPercentage(string $testPercentage): void
+    public function setPercentage(string $percentage): void
     {
-        $this->testPercentage = $testPercentage;
+        $this->percentage = $percentage;
     }
+
 }
