@@ -2,12 +2,14 @@
 
 namespace Controllers;
 
+use Entities\Question;
 use Mappers\QuestionMapper;
 use Model\InputTable;
 use Operations\Delete;
 use Operations\Filler;
 use Operations\Update;
 use Parsers\QuestionParser;
+use Repositories\AnswerRepository;
 use Repositories\QuestionRepository;
 
 class QuestionController extends BaseControlller
@@ -36,22 +38,37 @@ class QuestionController extends BaseControlller
     public function updateAction()
     {
         $questionRepository = new QuestionRepository();
+        $answerRepository = new AnswerRepository();
 
-        $question = $questionRepository->getQuestion($_GET["question_id"]);
+        $questionId = $_GET["question_id"];
 
-        $this->view("Update.php", ["question" => $question]);
+        $question = $questionRepository->getQuestion($questionId);
+        $answers = $answerRepository->getAll($questionId);
+
+        $this->view("Update.php", ["question" => $question, "answers" => $answers]);
     }
 
     public function updateActionPost()
     {
+        $errors = [];
+        $questionRepository = new QuestionRepository();
+
+        $question = QuestionParser::parse($_POST, $_GET);
+
+        $questionRepository->update($question, $errors);
+
+        $this->indexAction();
 
     }
 
     public function deleteAction()
     {
-        $delete = new Delete();
-        $delete->delete($_GET["questionId"]);
-        header("Location: index.php?controller=Question&action=index&test_id={$_GET["test_id"]}");
-        exit();
+        $question = new Question();
+        $question = QuestionParser::parse($_POST, $_GET);
+
+        $questionRepository = new QuestionRepository();
+        $questionRepository->delete($question);
+
+        $this->indexAction();
     }
 }

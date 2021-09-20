@@ -4,25 +4,16 @@ namespace Validators;
 
 class ExamValidator
 {
-    public function validate($postData, &$errors):bool
+    public static function validate($postData, &$errors):bool
     {
         $isValid = true;
-        $counter = 1;
-        if($postData["name"] == "")
+
+        if($postData["name"] === "")
         {
             $isValid = false;
-            array_push($errors, "Name is missing!");
+            array_push($errors, "Name is Missing!");
         }
 
-        foreach ($postData["answers"] as $answers)
-        {
-            if($answers == "")
-            {
-                $isValid = false;
-                array_push($errors, "Answer {$counter} is Missing!");
-            }
-            $counter++;
-        }
         return $isValid;
     }
 }

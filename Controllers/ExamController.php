@@ -2,48 +2,40 @@
 
 namespace Controllers;
 
-use DB\Connection;
-use Mappers\QuestionMapper;
-use SQLBuilders\AnswerSQLBuilder;
-use SQLBuilders\QuestionSQLBuilder;
+use Repositories\AnswerRepository;
+use Repositories\QuestionRepository;
 use Validators\ExamValidator;
 
 class ExamController extends BaseControlller
 {
-    public array $errors = [];
+    private object $questionRepository;
+    private object $answerRepository;
+
+    function __construct()
+    {
+        $this->questionRepository = new QuestionRepository();
+        $this->answerRepository = new AnswerRepository();
+    }
+
     public function indexAction()
     {
-        $questionSqlBuilder = new QuestionSQLBuilder();
-        $answerSqlBuilder = new AnswerSQLBuilder();
-
-        $connection = new Connection();
-        $connection->connect();
-        $questionsData = $connection->getAll($questionSqlBuilder->buildGetAll($_GET["test_id"]));
-        $questions = [];
-        $answers = [];
-
-        foreach ($questionsData as $question)
-        {
-            $questions[] = QuestionMapper::map($question);
-            $answers[] = $connection->getAll($answerSqlBuilder->buildGetAnswersByQuestionId($question["id"]));
-        }
-
-        if(isset($_GET["valid"])){
-            if($this->validateAnswers($_POST)){
-                header("Location: index.php?controller=Exam&action=sended&test_id={$_GET["test_id"]}");
-                exit();
-            }
-        }
-
-        $this->view("Index.php", ['questions' => $questions], $this->errors, $answers);
+        $this->view("Index.php");
     }
 
-    private function validateAnswers($postData):bool
+    public function indexActionPost()
     {
-        $testValidation = new ExamValidator();
-        if(!$testValidation->validate($postData, $this->errors)){
-            return false;
+        $errors = [];
+        if(ExamValidator::validate($_POST, $errors))
+        {
+            $testId = $_GET["test_id"];
+            $questions = $this->questionRepository->getAll($testId);
+            foreach ($questions as $question)
+            {
+                $answers[] = $this->answerRepository->getAll($question->getId());
+            }
+            $this->view("Exam.php", ["questions" => $questions, "answers" => $answers, "name" => $_POST["name"]]);
         }
-        return true;
+        else $this->view("Index.php", null, $errors);
     }
+
 }

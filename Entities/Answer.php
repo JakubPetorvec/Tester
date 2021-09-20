@@ -4,26 +4,10 @@ namespace Entities;
 
 class Answer extends BaseEntity
 {
-    private int $testId;
-    private int $questionId;
-    private string $answer;
-    private int $value;
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
+    private int $testId = 0;
+    private int $questionId = 0;
+    private string $answer = "";
+    private string $value = "";
 
     /**
      * @return int
@@ -60,7 +44,7 @@ class Answer extends BaseEntity
     /**
      * @return int
      */
-    public function getValue(): int
+    public function getValue(): string
     {
         return $this->value;
     }
@@ -68,7 +52,7 @@ class Answer extends BaseEntity
     /**
      * @param int $value
      */
-    public function setValue(int $value): void
+    public function setValue(string $value): void
     {
         $this->value = $value;
     }

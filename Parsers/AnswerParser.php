@@ -5,25 +5,16 @@ use Entities\Answer;
 
 class AnswerParser
 {
-    public function parse(array $postData, int $questionId, int $answerId):Answer
+    public static function parse(array $postData, array $getData): Answer
     {
         $answer = new Answer();
-        $answer->setQuestionId($questionId);
-        $answer->setAnswer($this->generateAnswerArray($postData, $answerId));
-        $answer->setValue($this->setValue($postData, $answerId));
+
+        if(isset($getData["answer_id"])) $answer->setId($getData["answer_id"]);
+        if(isset($getData["test_id"])) $answer->setTestId($getData["test_id"]);
+        if(isset($getData["question_id"])) $answer->setQuestionId($getData["question_id"]);
+        if(isset($postData["answer"])) $answer->setAnswer($postData["answer"]);
+        if(isset($postData["value"])) $answer->setValue($postData["value"]);
+
         return $answer;
-    }
-
-    private function generateAnswerArray(array $postData,int $answerId):string
-    {
-        $answers = [0 => $postData["txtAns0"],
-                    1 => $postData["txtAns1"],
-                    2 => $postData["txtAns2"]];
-        return $answers[$answerId];
-    }
-
-    private function setValue(array $postData, int $answerId):int
-    {
-        return isset($postData["check"][$answerId]) ? 1 : 0;
     }
 }

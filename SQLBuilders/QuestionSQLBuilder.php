@@ -10,9 +10,9 @@ class QuestionSQLBuilder
         return "INSERT INTO questions (test_id, question, type) VALUES ('{$question->getTestId()}', '{$question->getQuestion()}', '{$question->getType()}')";
     }
 
-    public function buildUpdate(Question $question, $rowId): string
+    public function buildUpdate(Question $question): string
     {
-        return "UPDATE questions SET question = '{$question->getQuestion()}' WHERE id = '{$rowId}'";
+        return "UPDATE questions SET question = '{$question->getQuestion()}' WHERE id = '{$question->getId()}'";
     }
 
     public function buildGetAll(int $testId): string
@@ -25,8 +25,8 @@ class QuestionSQLBuilder
         return "SELECT * FROM questions WHERE id = {$rowId} ";
     }
 
-    public function buildDeleteRowById($rowId): string
+    public function buildDelete(Question $question): string
     {
-        return "DELETE FROM questions WHERE id = '{$rowId}'";
+        return "DELETE FROM questions WHERE id = '{$question->getId()}'";
     }
 }

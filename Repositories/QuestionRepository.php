@@ -41,20 +41,33 @@ class QuestionRepository
         return QuestionMapper::map($this->connection->getAll($questionSqlBuilder->buildGetRowById($questionId))[0]);
     }
 
-    public function insert($questionData, &$errors): Question
+    public function insert(Question $question, &$errors): Question
     {
-        $question = new Question();
-        print_r($questionData);
-        $question->setId($questionData->getId());
-        $question->setTestId($questionData->getTestId());
-        $question->setQuestion($questionData->getQuestion());
-        $question->setType($questionData->getType());
-
-        if(QuestionValidator::validate($questionData, $errors)){
+        if(QuestionValidator::validate($question, $errors))
+        {
             $this->connection->connect();
             $questionSqlBuilder = new QuestionSQLBuilder();
             $this->connection->insert($questionSqlBuilder->buildInsert($question));
         }
         return $question;
+    }
+
+    public function update(Question $question, &$errors): Question
+    {
+        if(QuestionValidator::validate($question, $errors))
+        {
+            $this->connection->connect();
+            $questionSqlBuilder = new QuestionSQLBuilder();
+            $this->connection->update($questionSqlBuilder->buildUpdate($question));
+        }
+
+        return $question;
+    }
+
+    public function delete(Question $question): void
+    {
+        $questionSqlBuilder = new QuestionSQLBuilder();
+        $this->connection->connect();
+        $this->connection->delete($questionSqlBuilder->buildDelete($question));
     }
 }
