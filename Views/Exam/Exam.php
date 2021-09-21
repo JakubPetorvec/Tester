@@ -3,9 +3,7 @@
 use Entities\Answer;
 use Entities\Question;
 
-if(!isset($model["questions"])) $model["questions"] = new Question();
-if(!isset($model["answers"])) $model["answers"] = new Answer();
-if(!isset($model["name"])) $model["name"] = "";
+if(!isset($model)) $model = new stdClass();
 if(!isset($errors)) $errors = [];
 ?>
 
@@ -20,33 +18,28 @@ if(!isset($errors)) $errors = [];
 
 <form method="post">
     <input type="hidden" name="sended" value="1">
+    <input type="hidden" name="sendedExam" value="1">
     <table>
-        <tr><td>Name : <?php echo $model["name"]?></td></tr>
+        <tr><td>Name</td></tr>
+        <tr><td><input type="text" name="name" value="<?php echo $_POST["name"]?>"></td></tr>
         <tr><td>----------------------------------</td></tr>
         <?php
-        $counterQuestion = 0;
-        foreach ($model["questions"] as $question)
+        foreach ($model as $question)
         {
             ?><tr>
-            <th><?php echo ($counterQuestion+1)?>. <input type="text" readonly name="question[<?php echo $model["questions"][$counterQuestion]->getId()?>]" value="<?php echo $question->getQuestion()?>"></th>
+            <td><?php echo $question->question->getQuestion()?></td>
             <?php
-            $counterAnswer = 0;
-            if($question->getType() === "button")
+            if($question->question->getType() === "button")
             {
-                foreach ($model["answers"][$counterQuestion] as $answer)
+                foreach ($question->answers as $answer)
                 {
-                    if($answer->getQuestionId() == $question->getId())
-                    {
-                        ?><tr><td><?php echo ($counterAnswer+1).". "?><input type="radio" checked value="<?php echo $answer->getAnswer()?>" name="answer[<?php echo $counterQuestion?>]"><?php echo $answer->getAnswer()?></td></tr><?php
-                    }
-                    $counterAnswer++;
+                    ?><tr><td><input type="radio" checked value="<?php echo $answer->getId()?>" name="answer[<?php echo $question->question->getId()?>]"><?php echo $answer->getAnswer()?></td></tr><?php
                 }
             }
             else
             {
-                ?><tr><td>1. <input type="text" name="answer[<?php echo $counterQuestion?>]"></td></tr><?php
+                ?><tr><td><input type="text" name="answer[<?php echo $question->question->getId()?>]"></td></tr><?php
             }
-            $counterQuestion++;
             ?>
             </tr>
             <tr><td>----------------------------------</td></tr><?php

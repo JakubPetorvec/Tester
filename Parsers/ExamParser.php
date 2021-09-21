@@ -7,20 +7,14 @@ use Entities\Question;
 
 class ExamParser
 {
-    public static function parse(array $postData): array
+    public static function parse(array $postData, int $examId): array
     {
-        $data = [];
-        $questions = new Question();
-        $answers = new Answer();
+        $questions = [];
+        $answers = [];
 
-        foreach ($postData["question"] as $questionData)
-        {
-            $question = new Question();
+        foreach ($postData["question"] as $key=>$question) array_push($questions, $key);
+        foreach ($postData["answer"] as $answer) array_push($answers, $answer);
 
-            //$data["question"] = $question->se
-        }
-
-
-        return $data;
+        return ["question" => $questions, "answers" => $answers, "examId" => $examId];
     }
 }
