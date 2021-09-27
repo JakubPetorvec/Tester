@@ -47,8 +47,9 @@ class EvaluationController extends BaseControlller
         $score = round(($data["rightAnswers"] / $data["testLenght"]) * 100);
 
         $exam = ExamMapper::map($this->evaluationRepository->getTable("exams", $_GET["exam_id"])[0]);
-        //print_r($this->testRepository->getRow($exam->getTestId()));
         $test = TestMapper::map($this->testRepository->getRow($exam->getTestId())[0]);
+
+        $this->evaluationRepository->insert($_GET["exam_id"], $score >= $test->getPercentage() ? 1 : 0);
 
         $this->view("final.php", ["score" => $score, "test" => $test]);
     }

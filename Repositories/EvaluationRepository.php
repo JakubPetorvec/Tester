@@ -3,8 +3,8 @@
 namespace Repositories;
 
 use DB\Connection;
+use Entities\Evaluation;
 use Mappers\ExamMapper;
-use Model\Evaluation;
 use SQLBuilders\EvaluationSQLBuilder;
 
 class EvaluationRepository
@@ -39,6 +39,17 @@ class EvaluationRepository
     {
         $this->connection->connect();
         return $this->connection->getAll($this->evaluationSqlBuilder->buildGetAll($table, $id));
+    }
+
+    public function insert(int $examId, int $passed): void
+    {
+        $evaluation = new Evaluation();
+        $this->connection->connect();
+
+        $evaluation->setExamId($examId);
+        $evaluation->setPassed($passed);
+
+        $this->connection->insert($this->evaluationSqlBuilder->buildInsert($evaluation));
     }
 
 

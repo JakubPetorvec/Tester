@@ -2,6 +2,9 @@
 
 namespace SQLBuilders;
 
+
+use Entities\Evaluation;
+
 class EvaluationSQLBuilder
 {
     public function buildGetAll(string $table, int $id = null): string
@@ -14,6 +17,11 @@ class EvaluationSQLBuilder
     {
         $query = "SELECT ea.id, questions.question, questions.type, answers.answer, answers.value, ea.textboxAnswer FROM exams_answers as ea LEFT JOIN questions ON ea.question_id = questions.id LEFT JOIN answers ON ea.buttonAnswer = answers.id WHERE exam_id = $examId";
         return $query;
+    }
+
+    public function buildInsert(Evaluation $evaluation)
+    {
+        return "INSERT INTO evaluations (exam_id, passed) VALUES ('{$evaluation->getExamId()}', '{$evaluation->getPassed()}')";
     }
 
 
