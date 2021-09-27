@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: 127.0.0.1
--- Vytvořeno: Pon 27. zář 2021, 13:29
+-- Vytvořeno: Pon 27. zář 2021, 13:47
 -- Verze serveru: 10.4.21-MariaDB
 -- Verze PHP: 8.0.10
 
@@ -43,6 +43,25 @@ INSERT INTO `answers` (`id`, `question_id`, `answer`, `value`) VALUES
 (375, 275, 'ff', 0),
 (376, 275, 'asdggg', 0),
 (377, 279, 'asdggg', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabulky `evaluations`
+--
+
+CREATE TABLE `evaluations` (
+  `id` int(10) NOT NULL,
+  `exam_id` int(10) NOT NULL,
+  `passed` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Vypisuji data pro tabulku `evaluations`
+--
+
+INSERT INTO `evaluations` (`id`, `exam_id`, `passed`) VALUES
+(1, 329, 1);
 
 -- --------------------------------------------------------
 
@@ -144,6 +163,13 @@ ALTER TABLE `answers`
   ADD KEY `id` (`question_id`);
 
 --
+-- Indexy pro tabulku `evaluations`
+--
+ALTER TABLE `evaluations`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `exam_id` (`exam_id`);
+
+--
 -- Indexy pro tabulku `exams`
 --
 ALTER TABLE `exams`
@@ -184,6 +210,12 @@ ALTER TABLE `answers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=378;
 
 --
+-- AUTO_INCREMENT pro tabulku `evaluations`
+--
+ALTER TABLE `evaluations`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT pro tabulku `exams`
 --
 ALTER TABLE `exams`
@@ -216,6 +248,12 @@ ALTER TABLE `tests`
 --
 ALTER TABLE `answers`
   ADD CONSTRAINT `answers_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Omezení pro tabulku `evaluations`
+--
+ALTER TABLE `evaluations`
+  ADD CONSTRAINT `evaluations_ibfk_1` FOREIGN KEY (`exam_id`) REFERENCES `exams` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Omezení pro tabulku `exams`
