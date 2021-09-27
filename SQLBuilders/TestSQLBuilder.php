@@ -6,8 +6,9 @@ use Entities\Test;
 
 class TestSQLBuilder
 {
-    public function buildGetAll() :string
+    public function buildGetAll(int $id = null) :string
     {
+        if($id != null) return "SELECT * FROM tests WHERE id = $id";
         return "SELECT * FROM tests";
     }
 

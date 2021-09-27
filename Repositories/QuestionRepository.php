@@ -33,7 +33,7 @@ class QuestionRepository
         return $data;
     }
 
-    public function getQuestion($questionId): Question
+    public function getById($questionId): Question
     {
         $question = new Question();
         $questionSqlBuilder = new QuestionSQLBuilder();

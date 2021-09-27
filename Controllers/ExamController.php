@@ -3,14 +3,14 @@
 namespace Controllers;
 
 use Entities\Exam;
-use mysqli;
-use Operations\Shuffle2Arrays;
+use Entities\ExamAnswer;
+use Entities\Question;
+use Parsers\ExamAnswersParser;
 use Parsers\ExamParser;
 use Repositories\AnswerRepository;
 use Repositories\ExamRepository;
 use Repositories\ExamTestRepository;
 use Repositories\QuestionRepository;
-use SQLBuilders\ExamSQLBuilder;
 use Validators\ExamValidator;
 
 class ExamController extends BaseControlller
@@ -29,19 +29,16 @@ class ExamController extends BaseControlller
         $this->view("Index.php");
     }
 
-    //split actions
-    //remake ExamValidators
-    //add test id to exam database
-    //repair insetring date time into database
     public function indexActionPost()
     {
         $errors = [];
-        print_r($_POST);
         if(ExamValidator::validate($_POST, $errors))
         {
             $exam = new Exam();
-            if(isset($_POST["name"])) $exam->setName($_POST["name"]);
-            $exam->setDate(date('Y-m-d H:i:s'));
+
+            $exam->setTestId($_GET["test_id"]);
+            $exam->setName($_POST["name"]);
+            $exam->setDate(date("d.m.Y H:i:s"));
 
             $examRepository = new ExamRepository();
             $examId = $examRepository->insert($exam);
@@ -59,18 +56,39 @@ class ExamController extends BaseControlller
                 $groupedQuestion->answers = $answers;
                 array_push($groupedQuestions, $groupedQuestion);
             }
-
-            if(isset($_POST["sendedExam"]))
-            {
-                $examTestRepository = new ExamTestRepository();
-                $examTestRepository->insert(ExamParser::parse($_POST, $examId));
-            }
-
             shuffle($groupedQuestions);
 
-            $this->view("Exam.php", $groupedQuestions);
+            $this->view("Exam.php", ["groupedQuestions" => $groupedQuestions, "examId" => $examId]);
         }
         else $this->view("Index.php", null, $errors);
+    }
+
+    public function saveActionPost()
+    {
+        $exam_id = $_POST["exam_id"];
+        $test_id = $_POST["test_id"];
+
+        $questionRepository = new QuestionRepository();
+        $answers = ExamAnswersParser::parse($_POST);
+        foreach ($answers as $questionId => $rawAnswer)
+        {
+            $question = $questionRepository->getById($questionId);
+
+            if ($question instanceof Question)
+            {
+                $examAnswer = new ExamAnswer();
+                $examAnswer->setExamId($exam_id);
+                $examAnswer->setQuestionId($questionId);
+                $examAnswer->setTestId($test_id);
+                if ($question->getType() === "button") $examAnswer->setButtonAnswer($rawAnswer);
+                else $examAnswer->setTextboxAnswer($rawAnswer);
+
+                $examTestRepository = new ExamTestRepository();
+                $examTestRepository->insertAnswer($examAnswer);
+            }
+        }
+        header("Location: index.php");
+        exit();
     }
 
 }

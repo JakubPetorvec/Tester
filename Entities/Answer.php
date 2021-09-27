@@ -4,7 +4,10 @@ namespace Entities;
 
 class Answer extends BaseEntity
 {
+    private ?Test $test = null;
     private int $testId = 0;
+
+    private ?Question $question = null;
     private int $questionId = 0;
     private string $answer = "";
     private string $value = "";

@@ -1,12 +1,12 @@
 <?php
 
-namespace Entities;
+namespace Model;
 
-class Exam extends BaseEntity
+class Evaluation extends BaseModel
 {
-    private int $testId = 0;
-    private string $name = "";
-    private string $date = "";
+    private int $testId;
+    private string $name;
+    private string $date;
 
     /**
      * @return string

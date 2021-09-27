@@ -17,8 +17,8 @@ foreach ($errors as $error)
         <tr><td>Answer</td><td>Value</td></tr>
         <tr>
             <td><input type="text" name="answer" value="<?php echo $model->getAnswer()?>"></td>
-            <td><input type="radio" name="value" value="TRUE" checked>True</td>
-            <td><input type="radio" name="value" value="FALSE">False</td>
+            <td><input type="radio" name="value" value="1" checked>True</td>
+            <td><input type="radio" name="value" value="0">False</td>
         </tr>
         <tr><td><input type="submit" name="Submit" value="Add Answer"></td></tr>
     </table>

@@ -27,6 +27,16 @@ class TestRepository
         return $test;
     }
 
+    public function getRow(int $id): array
+    {
+        $connection = new Connection();
+        $connection->connect();
+
+        $testSqlBuilder = new TestSQLBuilder();
+
+        return $connection->getAll($testSqlBuilder->buildGetAll($id));
+    }
+
     public function insert($testData, &$errors) :Test
     {
         $test = new Test();

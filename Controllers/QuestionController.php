@@ -3,8 +3,6 @@
 namespace Controllers;
 
 use Entities\Question;
-use Mappers\QuestionMapper;
-use Model\InputTable;
 use Operations\Delete;
 use Operations\Filler;
 use Operations\Update;
@@ -42,7 +40,7 @@ class QuestionController extends BaseControlller
 
         $questionId = $_GET["question_id"];
 
-        $question = $questionRepository->getQuestion($questionId);
+        $question = $questionRepository->getById($questionId);
         $answers = $answerRepository->getAll($questionId);
 
         $this->view("Update.php", ["question" => $question, "answers" => $answers]);

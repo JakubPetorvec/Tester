@@ -2,19 +2,32 @@
 
 namespace Parsers;
 
-use Entities\Answer;
-use Entities\Question;
+use Model\ExamTable;
 
 class ExamParser
 {
-    public static function parse(array $postData, int $examId): array
+    public static function parse(array $postData): ExamTable
     {
-        $questions = [];
-        $answers = [];
+        $examTable = new ExamTable();
 
-        foreach ($postData["question"] as $key=>$question) array_push($questions, $key);
-        foreach ($postData["answer"] as $answer) array_push($answers, $answer);
+        $answersTextbox = [];
+        $answersButton = [];
 
-        return ["question" => $questions, "answers" => $answers, "examId" => $examId];
+        foreach ($postData["answer"] as $key=>$answer)
+        {
+            $answersTextbox[$key] = $answer;
+        }
+
+        foreach ($postData["answerButton"] as $key=>$answer)
+        {
+            $answersButton[$key] = $answer;
+        }
+
+        $examTable->setExamId($postData["exam_id"]);
+        $examTable->setTestId($postData["test_id"]);
+        $examTable->setAnswersTextbox($answersTextbox);
+        $examTable->setAnswersButton($answersButton);
+
+         return $examTable;
     }
 }

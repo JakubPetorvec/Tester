@@ -3,7 +3,8 @@
 namespace Repositories;
 
 use DB\Connection;
-use Entities\Exam;
+use Entities\ExamAnswer;
+use Model\ExamTable;
 use SQLBuilders\ExamSQLBuilder;
 
 class ExamTestRepository
@@ -17,16 +18,9 @@ class ExamTestRepository
         $this->examSqlBuilder = new ExamSQLBuilder();
     }
 
-    public function insert($data): void
+    public function insertAnswer(ExamAnswer $examAnswer): void
     {
         $this->connection->connect();
-
-        print_r($data);
-        $counter = 0;
-        foreach ($data["question"] as $question)
-        {
-            $this->connection->insert($this->examSqlBuilder->buildInsertTest($data["examId"], $question, $data["answers"][$counter]));
-            $counter++;
-        }
+        $this->connection->insert($this->examSqlBuilder->buildInsertAnswer($examAnswer));
     }
 }

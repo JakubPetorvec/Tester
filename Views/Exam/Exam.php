@@ -16,15 +16,15 @@ if(!isset($errors)) $errors = [];
         ?></tr>
 </table>
 
-<form method="post">
+<form method="post" action="?controller=Exam&action=save">
     <input type="hidden" name="sended" value="1">
-    <input type="hidden" name="sendedExam" value="1">
+    <input type="hidden" name="exam_id" value="<?php echo $model["examId"]?>">
+    <input type="hidden" name="test_id" value="<?php echo $_GET["test_id"]?>">
     <table>
-        <tr><td>Name</td></tr>
-        <tr><td><input type="text" name="name" value="<?php echo $_POST["name"]?>"></td></tr>
+        <tr><td>Name : <?php echo $_POST["name"]?></td></tr>
         <tr><td>----------------------------------</td></tr>
         <?php
-        foreach ($model as $question)
+        foreach ($model["groupedQuestions"] as $question)
         {
             ?><tr>
             <td><?php echo $question->question->getQuestion()?></td>
