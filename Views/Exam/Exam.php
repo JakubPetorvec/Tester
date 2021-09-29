@@ -22,6 +22,7 @@ if(!isset($errors)) $errors = [];
     <input type="hidden" name="test_id" value="<?php echo $_GET["test_id"]?>">
     <table class="question-table">
         <thead><tr><td>Name : <?php echo $_POST["name"]?></td></tr></thead>
+        </table>
         <?php
         foreach ($model["groupedQuestions"] as $question)
         {
@@ -46,7 +47,6 @@ if(!isset($errors)) $errors = [];
             <?php
         }
         ?>
-        <tr><td><input type="submit" value="Send Answers"></td></tr>
-    </table>
+    <table class="question-table"><tr><td><input type="submit" value="Send Answers"></td></tr></table>
 </form>
 
