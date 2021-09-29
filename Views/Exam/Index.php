@@ -3,7 +3,9 @@
 if(!isset($modul)) $modul = "";
 if(!isset($errors)) $errors = [];
 ?>
-<a href="Index.php">Tests</a>
+<table class="question-table">
+<tr><td><a href="Index.php">Tests</a></td></tr>
+</table>
 <?php
 foreach ($errors as $error)
 {
@@ -12,9 +14,9 @@ foreach ($errors as $error)
 ?>
 <form method="post">
     <input type="hidden" name="sended" value="1">
-    <table class="input-table">
+    <table class="question-table">
+        <thead><tr><td>Name</td><td></td></tr></thead>
         <tr>
-            <td>Name</td>
             <td><input type="text" name="name" value="<?php $modul?>"></td>
             <td><label name="<?php echo "Date : ".date('d.m.20y')?>"><?php echo "Date : ".date('d.m.20y')?></label></td>
         </tr>
