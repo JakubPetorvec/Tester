@@ -4,8 +4,10 @@ use Entities\Test;
 
 if (!isset($model)) $model = new Test();
 ?>
-<a href="Index.php?controller=Evaluation&action=index">Evaluate exams</a>
-<a href="index.php?controller=Test&action=create"><h4>Create new test</h4></a>
+<table class="question-table">
+<tr><td><a href="Index.php?controller=Evaluation&action=index">Evaluate exams</a></td></tr>
+<tr><td><a href="index.php?controller=Test&action=create"><h4>Create new test</h4></a></td></tr>
+</table>
 <form>
     <table class="question-table">
         <thead><tr><th>ID</th><th>Name</th><th>Percentage</th><th></th><th></th><th></th></tr></thead>

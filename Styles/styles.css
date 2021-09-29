@@ -5,15 +5,24 @@
 
 .input-table{
     border-collapse: collapse;
-    margin: 25px 0;
     font-size: 0.5cm;
     min-width: 300px;
-}
-
-.input-table{
     padding: 10px;
     text-align: center;
     border: 1px solid black;
+}
+
+.question-table{
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+}
+
+.textarea{
+    width: 100%;
+    border:1px solid #999999;
+    margin:5px 0;
+    padding:3px;
 }
 
 .question-table thead tr,

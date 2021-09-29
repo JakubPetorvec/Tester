@@ -9,6 +9,7 @@ class EvaluationModel extends BaseModel
     private ?string $answer = null;
     private ?string $value = null;
     private ?string $textboxAnswer = null;
+    private ?int $isRight = 0;
 
     /**
      * @return string
@@ -88,6 +89,22 @@ class EvaluationModel extends BaseModel
     public function setTextboxAnswer(?string $textboxAnswer): void
     {
         $this->textboxAnswer = $textboxAnswer;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIsRight(): ?int
+    {
+        return $this->isRight;
+    }
+
+    /**
+     * @param int $isRight
+     */
+    public function setIsRight(?int $isRight): void
+    {
+        $this->isRight = $isRight;
     }
 
 

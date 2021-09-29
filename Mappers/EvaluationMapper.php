@@ -16,6 +16,7 @@ class EvaluationMapper
         $evaluation->setAnswer($row["answer"]);
         $evaluation->setValue($row["value"]);
         $evaluation->setTextboxAnswer($row["textboxAnswer"]);
+        $evaluation->setIsRight($row["isRight"]);
 
         return $evaluation;
     }

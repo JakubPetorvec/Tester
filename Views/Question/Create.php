@@ -4,8 +4,8 @@ use Entities\Question;
 
 if (!isset($model)) $model = new Question();
 if (!isset($errors)) $errors = [];
-?><table>
-    <tr><h4><a href="Index.php?controller=Question&action=index&test_id=<?php echo $model->getTestId()?>">Questions</a></h4></tr></tr><?php
+?><table class="question-table">
+    <tr><td><h4><a href="Index.php?controller=Question&action=index&test_id=<?php echo $model->getTestId()?>">Questions</a></h4></td></tr><?php
 foreach ($errors as $error)
 {
  ?><tr><td> <?php echo $error?></td></tr><?php
@@ -13,11 +13,9 @@ foreach ($errors as $error)
 ?></table>
 <form name="frmSave" method="post">
     <input type="hidden" name="sended" value="1">
-    <table class="input-table">
-        <tr>
-            <td><label>Question</label></td>
-            <td><input type="text" name="question" value="<?php echo $model->getQuestion(); ?>"></td>
-        </tr>
+    <table class="question-table">
+        <thead><tr><td><label>Question</label></td><td></td></tr></thead>
+        <tr><td><input type="text" name="question" value="<?php echo $model->getQuestion(); ?>"></td></tr>
         <tr>
             <td><label>Button Type<input type="radio" name="type" value="button" checked></label></td>
             <td><label>Textbox Type<input type="radio" name="type" value="textbox"></label></td>

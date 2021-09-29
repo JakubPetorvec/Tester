@@ -4,8 +4,10 @@ use Model\Evaluation;
 
 if(!isset($model)) $model = new Evaluation();
 ?>
+<table class="question-table">
+    <tr><td><a href="index.php">Tests</a></td></tr>
+</table>
 
-<a href="index.php">Tests</a>
 
 <table class="question-table">
     <thead><tr><td>ID</td><td>Test</td><td>Name</td><td>Start</td><td>Finish</td><td>Minimum Percentage</td><td>Test Percentage</td><td></td></tr></thead>

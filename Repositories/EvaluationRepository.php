@@ -5,6 +5,7 @@ namespace Repositories;
 use DB\Connection;
 use Model\Evaluation;
 use Mappers\ExamMapper;
+use Model\EvaluationModel;
 use SQLBuilders\EvaluationSQLBuilder;
 
 class EvaluationRepository
@@ -50,11 +51,10 @@ class EvaluationRepository
         $this->connection->insert($this->evaluationSqlBuilder->buildUpdate($evaluation));
     }
 
-    public function update(Evaluation $evaluation): void
+    public function update(EvaluationModel $evaluationModel): void
     {
-        print_r($evaluation);
         $this->connection->connect();
-        //$this->connection->update($this->evaluationSqlBuilder->);
+        $this->connection->update($this->evaluationSqlBuilder->buildUpdateAnswer($evaluationModel));
     }
 
 

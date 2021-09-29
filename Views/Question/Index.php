@@ -5,9 +5,9 @@ if (!isset($model))
 }
 ?>
 <form method="get">
-    <table>
-        <tr><h4><a href="Index.php?controller=Question&action=create&test_id=<?php echo $_GET["test_id"] ?>">Add question</a></h4>
-        <tr><h4><a href="Index.php?controller=Test">Tests</a></h4></tr></tr>
+    <table class="question-table">
+        <tr><td><h4><a href="Index.php?controller=Question&action=create&test_id=<?php echo $_GET["test_id"] ?>">Add question</a></h4></td></tr>
+        <tr><td><h4><a href="Index.php?controller=Test">Tests</a></h4></td></tr>
     </table>
     <table class="question-table">
         <thead><tr><th>ID</th><th>Question</th><th>Type</th><th>EDIT</th><th>DELETE</th></tr></thead>

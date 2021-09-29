@@ -57,8 +57,6 @@ class ExamController extends BaseControlller
                 $groupedQuestion->answers = $answers;
                 array_push($groupedQuestions, $groupedQuestion);
             }
-            shuffle($groupedQuestions);
-
             $this->view("Exam.php", ["groupedQuestions" => $groupedQuestions, "examId" => $examId]);
         }
         else $this->view("Index.php", null, $errors);
