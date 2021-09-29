@@ -2,8 +2,6 @@
 
 namespace Entities;
 
-use Model\BaseModel;
-
 class Evaluation extends BaseEntity
 {
     private int $examId = 0;

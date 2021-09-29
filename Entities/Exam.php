@@ -6,7 +6,8 @@ class Exam extends BaseEntity
 {
     private int $testId = 0;
     private string $name = "";
-    private string $date = "";
+    private string $start = "";
+    private string $finish = "";
 
     /**
      * @return string
@@ -25,22 +26,6 @@ class Exam extends BaseEntity
     }
 
     /**
-     * @return string
-     */
-    public function getDate(): string
-    {
-        return $this->date;
-    }
-
-    /**
-     * @param string $date
-     */
-    public function setDate(string $date): void
-    {
-        $this->date = $date;
-    }
-
-    /**
      * @return int
      */
     public function getTestId(): int
@@ -54,5 +39,37 @@ class Exam extends BaseEntity
     public function setTestId(int $testId): void
     {
         $this->testId = $testId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStart(): string
+    {
+        return $this->start;
+    }
+
+    /**
+     * @param string $start
+     */
+    public function setStart(string $start): void
+    {
+        $this->start = $start;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFinish(): string
+    {
+        return $this->finish;
+    }
+
+    /**
+     * @param string $finish
+     */
+    public function setFinish(string $finish): void
+    {
+        $this->finish = $finish;
     }
 }

@@ -3,9 +3,6 @@
 namespace Controllers;
 
 use Entities\Question;
-use Operations\Delete;
-use Operations\Filler;
-use Operations\Update;
 use Parsers\QuestionParser;
 use Repositories\AnswerRepository;
 use Repositories\QuestionRepository;
@@ -61,11 +58,8 @@ class QuestionController extends BaseControlller
 
     public function deleteAction()
     {
-        $question = new Question();
-        $question = QuestionParser::parse($_POST, $_GET);
-
         $questionRepository = new QuestionRepository();
-        $questionRepository->delete($question);
+        $questionRepository->delete(QuestionParser::parse($_POST, $_GET));
 
         $this->indexAction();
     }

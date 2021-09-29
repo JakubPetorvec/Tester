@@ -3,7 +3,7 @@
 namespace Repositories;
 
 use DB\Connection;
-use Entities\Evaluation;
+use Model\Evaluation;
 use Mappers\ExamMapper;
 use SQLBuilders\EvaluationSQLBuilder;
 
@@ -18,14 +18,12 @@ class EvaluationRepository
         $this->evaluationSqlBuilder = new EvaluationSQLBuilder();
     }
 
-    public function getAll(string $table, int $id = null): array
+    public function getAll(): array
     {
         $this->connection->connect();
-        $data = $this->connection->getAll($this->evaluationSqlBuilder->buildGetAll($table, $id));
-
+        $data = $this->connection->getAll($this->evaluationSqlBuilder->buildGetAll());
         $evaluation = [];
-        if($id != null) foreach ($data as $row) $evaluation[] = ExamMapper::map($row);
-        else foreach ($data as $row) $evaluation[] = ExamMapper::map($row);
+        foreach ($data as $row) $evaluation[] = ExamMapper::map($row);
         return $evaluation;
     }
 
@@ -41,15 +39,22 @@ class EvaluationRepository
         return $this->connection->getAll($this->evaluationSqlBuilder->buildGetAll($table, $id));
     }
 
-    public function insert(int $examId, int $passed): void
+    public function insert(int $examId, int $percentage): void
     {
         $evaluation = new Evaluation();
         $this->connection->connect();
 
-        $evaluation->setExamId($examId);
-        $evaluation->setPassed($passed);
+        $evaluation->setId($examId);
+        $evaluation->setPercentage($percentage);
 
-        $this->connection->insert($this->evaluationSqlBuilder->buildInsert($evaluation));
+        $this->connection->insert($this->evaluationSqlBuilder->buildUpdate($evaluation));
+    }
+
+    public function update(Evaluation $evaluation): void
+    {
+        print_r($evaluation);
+        $this->connection->connect();
+        //$this->connection->update($this->evaluationSqlBuilder->);
     }
 
 

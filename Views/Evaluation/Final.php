@@ -15,6 +15,6 @@ else
 }
 
 ?>
-<form action="Index.php">
+<form action="Index.php?controller=Evaluation&action=index">
     <input type="submit" value="Back">
 </form>

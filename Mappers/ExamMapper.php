@@ -11,9 +11,12 @@ class ExamMapper
         $evaluation = new Evaluation();
 
         $evaluation->setId($row["id"]);
-        $evaluation->setTestId($row["test_id"]);
+        $evaluation->setTestName($row["testName"]);
         $evaluation->setName($row["name"]);
-        $evaluation->setDate($row["date"]);
+        $evaluation->setStart($row["start"]);
+        $evaluation->setFinish($row["finish"]);
+        $evaluation->setNeededPercentage($row["neededPercentage"]);
+        $evaluation->setPercentage($row["percentage"]);
 
         return $evaluation;
     }

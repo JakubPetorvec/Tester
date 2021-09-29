@@ -9,17 +9,23 @@ use SQLBuilders\ExamSQLBuilder;
 class ExamRepository
 {
     private object $connection;
+    private object $examSqlBuilder;
 
     function __construct()
     {
         $this->connection = new Connection();
+        $this->examSqlBuilder = new ExamSQLBuilder();
     }
 
     public function insert(Exam $exam): int
     {
-        $examSqlBuilder = new ExamSQLBuilder();
-
         $this->connection->connect();
-        return $this->connection->insert($examSqlBuilder->buildInsert($exam));
+        return $this->connection->insert($this->examSqlBuilder->buildInsert($exam));
+    }
+
+    public function update(Exam $exam): void
+    {
+        $this->connection->connect();
+        $this->connection->update($this->examSqlBuilder->buildUpdate($exam));
     }
 }

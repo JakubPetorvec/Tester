@@ -2,12 +2,11 @@
 
 namespace Parsers;
 
-use Model\ExamTable;
-
 class ExamAnswersParser
 {
     public static function parse(array $postData): array
     {
-        return $postData["answer"]; 
+        if(isset($postData["answer"])) return $postData["answer"];
+        return [];
     }
 }

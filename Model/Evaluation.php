@@ -4,9 +4,13 @@ namespace Model;
 
 class Evaluation extends BaseModel
 {
-    private int $testId;
-    private string $name;
-    private string $date;
+    private int $testId = 0;
+    private string $testName = "";
+    private string $name = "";
+    private string $start = "";
+    private string $finish = "";
+    private string $neededPercentage = "";
+    private ?int $percentage = null;
 
     /**
      * @return string
@@ -25,22 +29,6 @@ class Evaluation extends BaseModel
     }
 
     /**
-     * @return string
-     */
-    public function getDate(): string
-    {
-        return $this->date;
-    }
-
-    /**
-     * @param string $date
-     */
-    public function setDate(string $date): void
-    {
-        $this->date = $date;
-    }
-
-    /**
      * @return int
      */
     public function getTestId(): int
@@ -55,4 +43,85 @@ class Evaluation extends BaseModel
     {
         $this->testId = $testId;
     }
+
+    /**
+     * @return string
+     */
+    public function getStart(): string
+    {
+        return $this->start;
+    }
+
+    /**
+     * @param string $start
+     */
+    public function setStart(string $start): void
+    {
+        $this->start = $start;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFinish(): string
+    {
+        return $this->finish;
+    }
+
+    /**
+     * @param string $finish
+     */
+    public function setFinish(string $finish): void
+    {
+        $this->finish = $finish;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPercentage(): ?int
+    {
+        return $this->percentage;
+    }
+
+    /**
+     * @param int|null $percentage
+     */
+    public function setPercentage(?int $percentage): void
+    {
+        $this->percentage = $percentage;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTestName(): string
+    {
+        return $this->testName;
+    }
+
+    /**
+     * @param string $testName
+     */
+    public function setTestName(string $testName): void
+    {
+        $this->testName = $testName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNeededPercentage(): string
+    {
+        return $this->neededPercentage;
+    }
+
+    /**
+     * @param string $neededPercentage
+     */
+    public function setNeededPercentage(string $neededPercentage): void
+    {
+        $this->neededPercentage = $neededPercentage;
+    }
+
 }

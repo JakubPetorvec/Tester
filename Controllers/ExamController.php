@@ -6,7 +6,6 @@ use Entities\Exam;
 use Entities\ExamAnswer;
 use Entities\Question;
 use Parsers\ExamAnswersParser;
-use Parsers\ExamParser;
 use Repositories\AnswerRepository;
 use Repositories\ExamRepository;
 use Repositories\ExamTestRepository;
@@ -17,11 +16,13 @@ class ExamController extends BaseControlller
 {
     private object $questionRepository;
     private object $answerRepository;
+    private object $examRepository;
 
     function __construct()
     {
         $this->questionRepository = new QuestionRepository();
         $this->answerRepository = new AnswerRepository();
+        $this->examRepository = new ExamRepository();
     }
 
     public function indexAction()
@@ -38,10 +39,10 @@ class ExamController extends BaseControlller
 
             $exam->setTestId($_GET["test_id"]);
             $exam->setName($_POST["name"]);
-            $exam->setDate(date("d.m.Y H:i:s"));
+            $exam->setStart(date("d.m.Y H:i:s"));
+            $exam->setFinish("Not finished");
 
-            $examRepository = new ExamRepository();
-            $examId = $examRepository->insert($exam);
+            $examId = $this->examRepository->insert($exam);
 
             $testId = $_GET["test_id"];
             $questions = $this->questionRepository->getAll($testId);
@@ -68,11 +69,17 @@ class ExamController extends BaseControlller
         $exam_id = $_POST["exam_id"];
         $test_id = $_POST["test_id"];
 
-        $questionRepository = new QuestionRepository();
+        $exam = new Exam();
+
+        $exam->setId($exam_id);
+        $exam->setFinish(date("d.m.Y H:i:s"));
+
+        $this->examRepository->update($exam);
+
         $answers = ExamAnswersParser::parse($_POST);
         foreach ($answers as $questionId => $rawAnswer)
         {
-            $question = $questionRepository->getById($questionId);
+            $question = $this->questionRepository->getById($questionId);
 
             if ($question instanceof Question)
             {

@@ -7,10 +7,9 @@ use Entities\Evaluation;
 
 class EvaluationSQLBuilder
 {
-    public function buildGetAll(string $table, int $id = null): string
+    public function buildGetAll(): string
     {
-        if($id != null) return "SELECT * FROM $table WHERE id = $id";
-        return "SELECT * FROM $table";
+        return "SELECT exams.id, tests.name AS testName, exams.name, exams.start, exams.finish, tests.percentage AS neededPercentage, exams.percentage FROM exams LEFT JOIN tests ON exams.test_id = tests.id;";
     }
 
     public function buildGetAllEvaluation(int $examId): string
@@ -19,9 +18,9 @@ class EvaluationSQLBuilder
         return $query;
     }
 
-    public function buildInsert(Evaluation $evaluation)
+    public function buildUpdate(\Model\Evaluation $evaluation): string
     {
-        return "INSERT INTO evaluations (exam_id, passed) VALUES ('{$evaluation->getExamId()}', '{$evaluation->getPassed()}')";
+        return "UPDATE exams SET percentage = '{$evaluation->getPercentage()}' WHERE id = '{$evaluation->getId()}'";
     }
 
 

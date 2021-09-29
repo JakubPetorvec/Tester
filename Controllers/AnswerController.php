@@ -3,7 +3,6 @@
 namespace Controllers;
 
 use Entities\Answer;
-use Mappers\AnswerMapper;
 use Parsers\AnswerParser;
 use Repositories\AnswerRepository;
 use Validators\AnswerValidator;
