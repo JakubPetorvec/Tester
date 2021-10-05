@@ -11,7 +11,7 @@ use Validators\QuestionValidator;
 
 class QuestionRepository
 {
-    private object $connection;
+    private Connection $connection;
 
     function __construct()
     {
@@ -35,7 +35,6 @@ class QuestionRepository
 
     public function getById($questionId): Question
     {
-        $question = new Question();
         $questionSqlBuilder = new QuestionSQLBuilder();
         $this->connection->connect();
         return QuestionMapper::map($this->connection->getAll($questionSqlBuilder->buildGetRowById($questionId))[0]);

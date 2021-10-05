@@ -12,10 +12,10 @@ if (!isset($errors)) $errors = [];
 ?><table class="question-table"><?php
     if($model["question"]->getType() ==="button")
     {
-        ?><tr><td><a href="Index.php?controller=Answer&action=create&test_id=<?php echo $model["question"]->getTestId()?>&question_id=<?php echo $model["question"]->getId()?>">Add Answer</a> </td></tr><?php
+        ?><tr><td><a href="Index.php?controller=Answer&action=create&testId=<?php echo $model["question"]->getTestId()?>&id=<?php echo $model["question"]->getId()?>">Add Answer</a> </td></tr><?php
     }
 
-    ?><tr><td><h4><a href="Index.php?controller=Question&action=index&test_id=<?php echo $model["question"]->getTestId()?>&question_id=<?php echo $model["question"]->getId()?>">Questions</a></h4></td></tr><?php
+    ?><tr><td><h4><a href="Index.php?controller=Question&action=index&testId=<?php echo $model["question"]->getTestId()?>&id=<?php echo $model["question"]->getId()?>">Questions</a></h4></td></tr><?php
     foreach ($errors as $error)
     {
         ?><tr><td> <?php echo $error?></td></tr><?php
@@ -38,10 +38,10 @@ if (!isset($errors)) $errors = [];
             ?><tr>
             <td><?php echo $answer->getId();?></td>
             <td><?php echo $answer->getQuestionId();?></td>
-            <td><?php echo $answer->getAnswer();?></td>
+            <td><?php echo $answer->getAnswer()[0];?></td>
             <td><?php echo $answer->getValue();;?></td>
-            <td><a href="Index.php?controller=Answer&action=update&test_id=<?php echo $_GET["test_id"]?>&question_id=<?php echo $answer->getQuestionId()?>&answer_id=<?php echo $answer->getId();?>">Edit</a></td>
-            <td><a href="Index.php?controller=Answer&action=delete&test_id=<?php echo $_GET["test_id"]?>&question_id=<?php echo $answer->getQuestionId()?>&answer_id=<?php echo $answer->getId();?>" >Delete</a></td>
+            <td><a href="Index.php?controller=Answer&action=update&id=<?php echo $_GET["testId"]?>&questionId=<?php echo $answer->getQuestionId()?>&answerId=<?php echo $answer->getId();?>">Edit</a></td>
+            <td><a href="Index.php?controller=Answer&action=delete&id=<?php echo $_GET["testId"]?>&questionId=<?php echo $answer->getQuestionId()?>&answerId=<?php echo $answer->getId();?>" >Delete</a></td>
         </tr> <?php
         }
         ?>

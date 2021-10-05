@@ -2,11 +2,13 @@
 
 namespace Parsers;
 
+use Entities\Answer;
+use Tools\ReflectionMapper;
+
 class ExamAnswersParser
 {
-    public static function parse(array $postData): array
+    public static function parse(array $postData): Answer
     {
-        if(isset($postData["answer"])) return $postData["answer"];
-        return [];
+        return ReflectionMapper::map(new Answer() ,$postData);
     }
 }

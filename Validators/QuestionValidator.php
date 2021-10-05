@@ -15,7 +15,6 @@ class QuestionValidator
             $isValid = false;
             array_push($errors, "Question is missing!");
         }
-
         return $isValid;
     }
 }

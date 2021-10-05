@@ -5,6 +5,7 @@ namespace Controllers;
 use Entities\Test;
 use Parsers\TestParser;
 use Repositories\TestRepository;
+use Tools\ReflectionMapper;
 
 class TestController extends BaseControlller
 {
@@ -12,7 +13,11 @@ class TestController extends BaseControlller
     {
         $testRepository = new TestRepository();
 
-        $this->view("Index.php", $testRepository->getAll());
+        foreach ($testRepository->getAll() as $row)
+        {
+            $model[] = ReflectionMapper::map(new Test(), $row);
+        }
+        $this->view("Index.php", $model);
     }
 
     public function createAction()

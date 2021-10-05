@@ -2,19 +2,27 @@
 
 namespace Parsers;
 use Entities\Answer;
+use Tools\ReflectionMapper;
 
-class AnswerParser
+class AnswerParser extends  ReflectionMapper
 {
     public static function parse(array $postData, array $getData): Answer
     {
-        $answer = new Answer();
-
-        if(isset($getData["answer_id"])) $answer->setId($getData["answer_id"]);
-        if(isset($getData["test_id"])) $answer->setTestId($getData["test_id"]);
-        if(isset($getData["question_id"])) $answer->setQuestionId($getData["question_id"]);
-        if(isset($postData["answer"])) $answer->setAnswer($postData["answer"]);
-        if(isset($postData["value"])) $answer->setValue($postData["value"]);
-
-        return $answer;
+        $data = [];
+        foreach ($postData as $key=>$item)
+        {
+            if($key === "answer")
+            {
+                $tmp[] = $item;
+                $data[$key] = $tmp;
+            }
+            else $data[$key] = $item;
+        }
+        foreach ($getData as $key=>$item)
+        {
+            if($key === "answerId") $data["id"] = $item;
+            else $data[$key] = $item;
+        }
+        return ReflectionMapper::map(new Answer(), $data);
     }
 }

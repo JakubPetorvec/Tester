@@ -3,14 +3,12 @@
 namespace Parsers;
 
 use Entities\Test;
+use Tools\ReflectionMapper;
 
 class TestParser
 {
     public static function parse($postData): Test
     {
-        $test = new Test();
-        $test->setName($postData["name"]);
-        $test->setPercentage($postData["percentage"]);
-        return $test;
+        return ReflectionMapper::map(new Test(), $postData);
     }
 }

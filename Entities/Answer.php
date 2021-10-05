@@ -6,7 +6,7 @@ class Answer extends BaseEntity
 {
     private int $testId = 0;
     private int $questionId = 0;
-    private string $answer = "";
+    private array $answer = [""];
     private string $value = "";
 
     /**
@@ -28,7 +28,7 @@ class Answer extends BaseEntity
     /**
      * @return string
      */
-    public function getAnswer(): string
+    public function getAnswer(): array
     {
         return $this->answer;
     }
@@ -36,7 +36,7 @@ class Answer extends BaseEntity
     /**
      * @param string $answer
      */
-    public function setAnswer(string $answer): void
+    public function setAnswer(array $answer): void
     {
         $this->answer = $answer;
     }

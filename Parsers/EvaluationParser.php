@@ -12,7 +12,6 @@ class EvaluationParser
         if(isset($postData["isRight"])) foreach ($postData["isRight"] as $isRight) $rightAnswers++;
 
         $data["rightAnswers"] = $rightAnswers;
-
         return $data;
     }
 }

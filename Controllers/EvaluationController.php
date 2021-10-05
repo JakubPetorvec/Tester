@@ -31,9 +31,6 @@ class EvaluationController extends BaseControlller
     {
         $model = [];
         $data = $this->evaluationRepository->getAllEvaluation($_GET["exam_id"]);
-
-        $exam = new Exam();
-
         foreach ($data as $row)
         {
             $model[] = EvaluationMapper::map($row);
@@ -43,7 +40,6 @@ class EvaluationController extends BaseControlller
 
     public function evaluateActionPost()
     {
-        //print_r($_POST);
         $data = EvaluationParser::parse($_POST);
         foreach ($_POST["isRight"] as $id => $row)
         {
@@ -55,10 +51,6 @@ class EvaluationController extends BaseControlller
         }
 
         $score = round(($data["rightAnswers"] / $data["testLenght"]) * 100);
-
-
-
-
         $exam = ExamMapper::map($this->evaluationRepository->getTable("exams", $_GET["exam_id"])[0]);
         $test = TestMapper::map($this->testRepository->getRow($exam->getTestId())[0]);
         $this->evaluationRepository->insert($_GET["exam_id"], $score);

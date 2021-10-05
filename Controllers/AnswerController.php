@@ -33,7 +33,7 @@ class AnswerController extends BaseControlller
     public function updateAction()
     {
         $answerRepository = new AnswerRepository();
-        $answer = $answerRepository->getRow($_GET["answer_id"]);
+        $answer = $answerRepository->getRow($_GET["answerId"]);
         $this->view("Update.php", $answer);
     }
 
@@ -41,29 +41,26 @@ class AnswerController extends BaseControlller
     {
         $errors = [];
         $answer = AnswerParser::parse($_POST, $_GET);
-
         if(AnswerValidator::validate($answer, $errors))
         {
             $answerRepository = new AnswerRepository();
             $answerRepository->update($answer);
-            header("Location: Index.php?controller=Question&action=update&test_id={$answer->getTestId()}&question_id={$answer->getQuestionId()}");
+            header("Location: Index.php?controller=Question&action=update&testId={$answer->getTestId()}&questionId={$answer->getQuestionId()}");
             exit();
         }
         $this->view("Update.php", $answer, $errors);
-
-
     }
 
     public function deleteAction()
     {
         $answerRepository = new AnswerRepository();
         $answer = new Answer();
-        $answer->setId($_GET["answer_id"]);
+        $answer->setId($_GET["answerId"]);
         $answerRepository->delete($answer);
 
-        $testId = $_GET["test_id"];
-        $questionId = $_GET["question_id"];
-        header("Location: Index.php?controller=Question&action=update&test_id={$testId}&question_id={$questionId}");
+        $testId = $_GET["testId"];
+        $questionId = $_GET["questionId"];
+        header("Location: Index.php?controller=Question&action=update&testId={$testId}&questionId={$questionId}");
         exit();
     }
 }

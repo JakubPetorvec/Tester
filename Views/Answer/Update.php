@@ -22,9 +22,9 @@ else{
     <table class="question-table">
         <thead><tr><td>Answer</td><td>Value</td><td></td></tr></thead>
         <tr>
-            <td><input type="text" name="answer" value="<?php echo $model->getAnswer()?>"></td>
-            <td><input type="radio" name="value" value="TRUE" <?php echo $true?>>True</td>
-            <td><input type="radio" name="value" value="FALSE" <?php echo $false?>>False</td>
+            <td><input type="text" name="answer" value="<?php echo $model->getAnswer()[0]?>"></td>
+            <td><input type="radio" name="value" value="1" <?php echo $true?>>True</td>
+            <td><input type="radio" name="value" value="0" <?php echo $false?>>False</td>
         </tr>
         <tr><td><input type="submit" name="Submit" value="Add Answer"></td><td></td><td></td></tr>
     </table>

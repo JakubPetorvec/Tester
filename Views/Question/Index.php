@@ -6,7 +6,7 @@ if (!isset($model))
 ?>
 <form method="get">
     <table class="question-table">
-        <tr><td><h4><a href="Index.php?controller=Question&action=create&test_id=<?php echo $_GET["test_id"] ?>">Add question</a></h4></td></tr>
+        <tr><td><h4><a href="Index.php?controller=Question&action=create&testId=<?php echo $_GET["testId"] ?>">Add question</a></h4></td></tr>
         <tr><td><h4><a href="Index.php?controller=Test">Tests</a></h4></td></tr>
     </table>
     <table class="question-table">
@@ -20,8 +20,8 @@ if (!isset($model))
                 <td> <?php echo $question->getId(); ?> </td>
                 <td> <?php echo $question->getQuestion(); ?> </td>
                 <td> <?php echo $question->getType(); ?> </td>
-                <td><a href="?controller=Question&action=update&question_id=<?php echo $question->getId(); ?>&test_id=<?php echo $_GET["test_id"]?>">Edit</a></td>
-                <td><a href="?controller=Question&action=delete&question_id=<?php echo $question->getId(); ?>&test_id=<?php echo $_GET["test_id"]?>">Delete</a></td>
+                <td><a href="?controller=Question&action=update&questionId=<?php echo $question->getId(); ?>&testId=<?php echo $_GET["testId"]?>">Edit</a></td>
+                <td><a href="?controller=Question&action=delete&questionId=<?php echo $question->getId(); ?>&testId=<?php echo $_GET["testId"]?>">Delete</a></td>
             </tr>
             <?php
         }

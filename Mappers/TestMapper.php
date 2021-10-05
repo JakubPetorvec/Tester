@@ -3,17 +3,12 @@
 namespace Mappers;
 
 use Entities\Test;
+use Tools\ReflectionMapper;
 
 class TestMapper
 {
     public static function map($postData): Test
     {
-        $test = new Test();
-
-        $test->setId($postData["id"]);
-        $test->setName($postData["name"]);
-        $test->setPercentage($postData["percentage"]);
-
-        return $test;
+        return ReflectionMapper::map(new Test(), $postData);
     }
 }

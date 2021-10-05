@@ -27,7 +27,10 @@ class AnswerRepository
         $data = [];
 
         foreach ($answers as $answer)
+        {
             $data[] = AnswerMapper::map($answer);
+        }
+
 
         return $data;
     }

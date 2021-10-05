@@ -33,7 +33,7 @@ if(!isset($errors)) $errors = [];
             {
                 foreach ($question->answers as $answer)
                 {
-                    ?><tr><td><input type="radio" value="<?php echo $answer->getId()?>" name="answer[<?php echo $question->question->getId()?>]"><?php echo $answer->getAnswer()?></td></tr><?php
+                    ?><tr><td><input type="radio" value="<?php echo $answer->getId()?>" name="answer[<?php echo $question->question->getId()?>]"><?php echo $answer->getAnswer()[0]?></td></tr><?php
                 }
             }
             else

@@ -12,7 +12,7 @@ class QuestionController extends BaseControlller
     public function indexAction()
     {
         $questionRepository = new QuestionRepository();
-        $this->view("Index.php", ['questions' => $questionRepository->getAll($_GET["test_id"])]);
+        $this->view("Index.php", ['questions' => $questionRepository->getAll($_GET["testId"])]);
     }
 
     public function createAction()
@@ -35,10 +35,8 @@ class QuestionController extends BaseControlller
         $questionRepository = new QuestionRepository();
         $answerRepository = new AnswerRepository();
 
-        $questionId = $_GET["question_id"];
-
-        $question = $questionRepository->getById($questionId);
-        $answers = $answerRepository->getAll($questionId);
+        $question = $questionRepository->getById($_GET["questionId"]);
+        $answers = $answerRepository->getAll($_GET["questionId"]);
 
         $this->view("Update.php", ["question" => $question, "answers" => $answers]);
     }
@@ -49,11 +47,9 @@ class QuestionController extends BaseControlller
         $questionRepository = new QuestionRepository();
 
         $question = QuestionParser::parse($_POST, $_GET);
-
         $questionRepository->update($question, $errors);
 
         $this->indexAction();
-
     }
 
     public function deleteAction()

@@ -7,7 +7,7 @@ class AnswerSQLBuilder
 {
     public function buildInsert(Answer $answer): string
     {
-        return "INSERT INTO answers (question_id, answer, value) VALUES ('{$answer->getQuestionId()}', '{$answer->getAnswer()}','{$answer->getValue()}')";
+        return "INSERT INTO answers (questionId, answer, value) VALUES ('{$answer->getQuestionId()}', '{$answer->getAnswer()}','{$answer->getValue()}')";
     }
 
     public function buildGetAll(): string
@@ -22,18 +22,17 @@ class AnswerSQLBuilder
 
     public function buildGetRowsByQuestionId($questionId): string
     {
-        return "SELECT * FROM answers WHERE question_id = '{$questionId}'";
+        return "SELECT * FROM answers WHERE questionId = '{$questionId}'";
     }
 
     public function buildGetAnswersByQuestionId($questionId): string
     {
-        return "SELECT answer FROM answers WHERE question_id = '{$questionId}'";
+        return "SELECT answer FROM answers WHERE questionId = '{$questionId}'";
     }
 
     public function buildUpdate(Answer $answer): string
     {
-        print_r($answer);
-        return "UPDATE answers SET answer = '{$answer->getAnswer()}', value = '{$answer->getValue()}' WHERE id = '{$answer->getId()}'";
+        return "UPDATE answers SET answer = '{$answer->getAnswer()[0]}', value = '{$answer->getValue()}' WHERE id = '{$answer->getId()}'";
     }
 
 

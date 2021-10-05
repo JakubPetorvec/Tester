@@ -71,11 +71,11 @@ class ExamController extends BaseControlller
 
         $exam->setId($exam_id);
         $exam->setFinish(date("d.m.Y H:i:s"));
-
         $this->examRepository->update($exam);
 
         $answers = ExamAnswersParser::parse($_POST);
-        foreach ($answers as $questionId => $rawAnswer)
+        print_r($answers);
+        foreach ($answers->getAnswer() as $questionId => $rawAnswer)
         {
             $question = $this->questionRepository->getById($questionId);
 
