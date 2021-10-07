@@ -9,38 +9,22 @@ use Mappers\QuestionMapper;
 use SQLBuilders\QuestionSQLBuilder;
 use Validators\QuestionValidator;
 
-class QuestionRepository
+class QuestionRepository extends BaseRepository
 {
-    private Connection $connection;
-
-    function __construct()
+    public static function getAllX(object $entity, array $selectors) : array
     {
-        $this->connection = new Connection();
-    }
-
-    public function getAll($testId) : array
-    {
-        $this->connection->connect();
-
-        $questionSqlBuilder = new QuestionSQLBuilder();
-
-        $questions = $this->connection->getAll($questionSqlBuilder->buildGetAll($testId));
-        $data = [];
-
-        foreach ($questions as $question)
-            $data[] = QuestionMapper::map($question);
-
+        foreach (BaseRepository::getAllBySelector($entity, $selectors) as $question) $data[] = QuestionMapper::map($question);
         return $data;
     }
 
-    public function getById($questionId): Question
+    /*
+    public static function getAllById($questionId): Question
     {
         $questionSqlBuilder = new QuestionSQLBuilder();
-        $this->connection->connect();
         return QuestionMapper::map($this->connection->getAll($questionSqlBuilder->buildGetRowById($questionId))[0]);
     }
 
-    public function insert(Question $question, &$errors): Question
+    public static function insert(Question $question, &$errors): Question
     {
         if(QuestionValidator::validate($question, $errors))
         {
@@ -68,5 +52,5 @@ class QuestionRepository
         $questionSqlBuilder = new QuestionSQLBuilder();
         $this->connection->connect();
         $this->connection->delete($questionSqlBuilder->buildDelete($question));
-    }
+    } */
 }

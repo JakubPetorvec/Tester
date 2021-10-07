@@ -8,33 +8,17 @@ use Mappers\AnswerMapper;
 use Parsers\AnswerParser;
 use SQLBuilders\AnswerSQLBuilder;
 
-class AnswerRepository
+class AnswerRepository extends BaseRepository
 {
-    private object $connection;
-    private object $answerSqlBuilder;
-
-    function __construct()
+    public static function getAllX(object $entity, array $selectors): array
     {
-        $this->connection = new Connection();
-        $this->answerSqlBuilder = new AnswerSQLBuilder();
-    }
-
-    public function getAll($questionId)
-    {
-        $this->connection->connect();
-
-        $answers = $this->connection->getAll($this->answerSqlBuilder->buildGetRowsByQuestionId($questionId));
-        $data = [];
-
-        foreach ($answers as $answer)
+        foreach (BaseRepository::getAllBySelector($entity, $selectors) as $answer)
         {
             $data[] = AnswerMapper::map($answer);
         }
-
-
         return $data;
     }
-
+    /*
     public function insert(Answer $answer): void
     {
         $this->connection->connect();
@@ -57,5 +41,5 @@ class AnswerRepository
     {
         $this->connection->connect();
         $this->connection->delete($this->answerSqlBuilder->buildDelete($answer));
-    }
+    }*/
 }

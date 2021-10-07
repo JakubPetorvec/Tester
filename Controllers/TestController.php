@@ -4,19 +4,14 @@ namespace Controllers;
 
 use Entities\Test;
 use Parsers\TestParser;
-use Repositories\TestRepository;
+use Repositories\BaseRepository;
 use Tools\ReflectionMapper;
 
 class TestController extends BaseControlller
 {
     public function indexAction()
     {
-        $testRepository = new TestRepository();
-
-        foreach ($testRepository->getAll() as $row)
-        {
-            $model[] = ReflectionMapper::map(new Test(), $row);
-        }
+        foreach (BaseRepository::getAll(new Test()) as $row) $model[] = ReflectionMapper::map(new Test(), $row);
         $this->view("Index.php", $model);
     }
 
@@ -27,17 +22,13 @@ class TestController extends BaseControlller
 
     public function createActionPost()
     {
-        $errors = [];
-        $testRepository = new TestRepository();
-        $testData = TestParser::parse($_POST);
-        $test = $testRepository->insert($testData, $errors);
+        BaseRepository::insert(TestParser::parse($_POST));
         if(empty($errors)) $this->redirect("Test", "index");
-        $this->view("Create.php", $test, $errors);
+        $this->view("Create.php", TestParser::parse($_POST), $errors);
     }
     public function deleteAction()
     {
-        $testRepository = new TestRepository();
-        if($testRepository->delete($_GET))
-            $this->redirect("Test", "index");
+        BaseRepository::delete(new Test(), $_GET["testId"]);
+        $this->redirect("Test", "index");
     }
 }

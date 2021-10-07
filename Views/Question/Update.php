@@ -2,7 +2,6 @@
 
 use Entities\Answer;
 use Entities\Question;
-
 if (!isset($model))
 {
     $model["question"] = new Question();
@@ -10,12 +9,12 @@ if (!isset($model))
 }
 if (!isset($errors)) $errors = [];
 ?><table class="question-table"><?php
-    if($model["question"]->getType() ==="button")
+    if($model["question"][0]->getType() ==="button")
     {
-        ?><tr><td><a href="Index.php?controller=Answer&action=create&testId=<?php echo $model["question"]->getTestId()?>&id=<?php echo $model["question"]->getId()?>">Add Answer</a> </td></tr><?php
+        ?><tr><td><a href="Index.php?controller=Answer&action=create&testId=<?php echo $model["question"][0]->getTestId()?>&id=<?php echo $model["question"][0]->getId()?>">Add Answer</a> </td></tr><?php
     }
 
-    ?><tr><td><h4><a href="Index.php?controller=Question&action=index&testId=<?php echo $model["question"]->getTestId()?>&id=<?php echo $model["question"]->getId()?>">Questions</a></h4></td></tr><?php
+    ?><tr><td><h4><a href="Index.php?controller=Question&action=index&testId=<?php echo $model["question"][0]->getTestId()?>&id=<?php echo $model["question"][0]->getId()?>">Questions</a></h4></td></tr><?php
     foreach ($errors as $error)
     {
         ?><tr><td> <?php echo $error?></td></tr><?php
@@ -26,10 +25,10 @@ if (!isset($errors)) $errors = [];
     <input type="hidden" name="sended" value="1">
     <table class="question-table">
         <thead><tr><td><label>Question</label></td></tr></thead>
-        <tr><td><input type="text" name="question" value="<?php echo $model["question"]->getQuestion(); ?>"></td></tr>
+        <tr><td><input type="text" name="question" value="<?php echo $model["question"][0]->getQuestion(); ?>"></td></tr>
         <tr><td><input type="submit" name="Submit" id="Submit" value="Uložit"></td></tr>
     </table>
-    <?php if($model["question"]->getType() ==="button"){?>
+    <?php if($model["question"][0]->getType() ==="button"){?>
     <table class="question-table">
         <thead><tr><td>Answer ID</td><td>Question ID</td><td>Answer</td><td>Value</td><td></td><td></td></tr></thead>
         <?php

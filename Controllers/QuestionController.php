@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Entities\Answer;
 use Entities\Question;
 use Parsers\QuestionParser;
 use Repositories\AnswerRepository;
@@ -11,8 +12,7 @@ class QuestionController extends BaseControlller
 {
     public function indexAction()
     {
-        $questionRepository = new QuestionRepository();
-        $this->view("Index.php", ['questions' => $questionRepository->getAll($_GET["testId"])]);
+        $this->view("Index.php", ['questions' => QuestionRepository::getAllX(new Question(), ["testId" => $_GET["testId"]])]);
     }
 
     public function createAction()
@@ -22,40 +22,31 @@ class QuestionController extends BaseControlller
 
     public function createActionPost()
     {
-        $errors = [];
         $questionRepository = new QuestionRepository();
         $questionData = QuestionParser::parse($_POST, $_GET);
-        $question = $questionRepository->insert($questionData, $errors);
-        if(empty($errors)) $this->redirect("Question", "index","&test_id={$question->getTestId()}");
-        $this->view("Create.php", $question, $errors);
+        $question = $questionRepository->insert($questionData);
+        if(empty($errors)) $this->redirect("Question", "index","&testId={$_GET["testId"]}");
+        $this->view("Create.php", $question);
     }
 
     public function updateAction()
     {
-        $questionRepository = new QuestionRepository();
-        $answerRepository = new AnswerRepository();
-
-        $question = $questionRepository->getById($_GET["questionId"]);
-        $answers = $answerRepository->getAll($_GET["questionId"]);
+        $question = QuestionRepository::getAllX(new Question(), ["id" => $_GET["questionId"]]);
+        $answers = AnswerRepository::getAllX(new Answer(), ["questionId" => $_GET["questionId"]]);
 
         $this->view("Update.php", ["question" => $question, "answers" => $answers]);
     }
 
     public function updateActionPost()
     {
-        $errors = [];
-        $questionRepository = new QuestionRepository();
-
-        $question = QuestionParser::parse($_POST, $_GET);
-        $questionRepository->update($question, $errors);
-
+        QuestionRepository::update(QuestionParser::map(new Question(), $_POST), $_GET["questionId"], ["question"]);
         $this->indexAction();
     }
 
     public function deleteAction()
     {
         $questionRepository = new QuestionRepository();
-        $questionRepository->delete(QuestionParser::parse($_POST, $_GET));
+        $questionRepository->delete(new Question(), $_GET["questionId"]);
 
         $this->indexAction();
     }

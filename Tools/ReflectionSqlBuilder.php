@@ -8,7 +8,7 @@ class ReflectionSqlBuilder
 {
     private object $entity;
     private string $selectors = "";
-    private string $dbName = "";
+    private string $tableName = "";
     private bool $deleteAll = false;
 
     function __construct(object $entity)
@@ -22,7 +22,7 @@ class ReflectionSqlBuilder
     // returns string with sql query
     public function buildGetAll(string $id = null): string
     {
-        return "SELECT {$this->selectors} FROM {$this->dbName}".($id === null ? "" : " WHERE id = {$id}");
+        return "SELECT {$this->selectors} FROM {$this->tableName}".($id === null ? "" : " WHERE id = {$id}");
     }
 
     // function for getting data from database based on chosen selector
@@ -31,78 +31,71 @@ class ReflectionSqlBuilder
     public function buildGetAllBySelector(array $selector): string
     {
         $selectorsArray = explode(", ",$this->selectors);
-
         $searchParameters = "";
         foreach ($selector as $param => $value)
         {
             if(in_array($param ,$selectorsArray)) $searchParameters .= " AND {$param} = {$value}";
-            else throw new Exception("Selector {$param} does not exist in entity {$this->dbName}");
+            else throw new Exception("Selector {$param} does not exist in entity {$this->tableName}");
         }
         if($searchParameters === "")
             throw new Exception("No selectors chosen!");
         $searchParameters = substr($searchParameters, 4);
-
-        return "SELECT {$this->selectors} FROM {$this->dbName} WHERE {$searchParameters}";
+        return "SELECT {$this->selectors} FROM {$this->tableName} WHERE {$searchParameters}";
     }
 
     // function for inserting everything in chosen database based on nothing
-    // inserting everything from given array
+    // inserting everything from entity
     // returns string with sql query
-    public function buildInsert(array $data): string
+    public function buildInsert(): string
     {
-        if($data === [])
-            throw new Exception("No data passed to insert function");
-
-        $selectorsArray = explode(", ",$this->selectors);
-        if(count($data) > count($selectorsArray))
-            throw new Exception("Too much parameters in insert function");
-
         $values = "";
+        $classGetters = $this->getClassGetMethods();
+        $tmpSelectors = explode(", ",$this->selectors);
+        $tmpSelectors = array_slice($tmpSelectors, 0, (count($tmpSelectors) - 1));
+        $selectorsFinal = "";
+        foreach ($tmpSelectors as $item) $selectorsFinal .= ", {$item}";
+        $selectorsFinal = substr($selectorsFinal, 1);
 
-        for($i = 0; $i < count($selectorsArray); $i++)
+        foreach ($classGetters as $method)
         {
-            if(isset($data[$i])) $values .= ", {$data[$i]}";
-            else $values .= ", ";
+            if($method !== "getId")
+            {
+                $values .= ", '{$this->entity->$method()}'";
+            }
         }
 
-        if($values === "")
-            throw new Exception("No values passed, cannot insert");
-
         $values = substr($values, 1);
-
-        return "INSERT INTO {$this->dbName} ({$this->selectors}) VALUES ({$values})";
+        return "INSERT INTO {$this->tableName} ({$selectorsFinal}) VALUES ({$values})";
     }
 
     // function for updating selected data
     // updates everything from given array
     // returns string with sql query
-    public function buildUpdate(string $id, array $data): string
+    public function buildUpdate(string $id, array $selectors): string
     {
-        if($data === [])
-            throw new Exception("No data passed to update function");
-
-        $selectorsArray = explode(", ", $this->selectors);
-        if(count($data) > count($selectorsArray))
-            throw new Exception("Too much data passed to update function");
-
+        $classGetters = $this->getClassGetMethods();
         $values = "";
-        foreach ($data as $param => $value)
+        $counter = 0;
+        foreach ($classGetters as $method)
         {
-            if(in_array($param ,$selectorsArray)) $values .= ", {$param} = {$value}";
-            else throw new Exception("Badly chosen selector param -> {$param} with value -> {$value}");
+            $tmp = substr($method, 3);
+            $tmp = lcfirst($tmp);
+            if(in_array($tmp ,$selectors)){
+                $values .= ", {$tmp} = '{$this->entity->$method()}'";
+            }
+            $counter++;
         }
         $values = substr($values, 1);
-
-        return "UPDATE {$this->dbName} SET {$values} WHERE id = {$id}";
+        return "UPDATE {$this->tableName} SET {$values} WHERE id = {$id}";
     }
 
     // function for deleting rows in database
     // delete row when id is given, if id is null then delete whole table if function prepareDeleteAll() is called before
     // returns string with sql query
-    public function buildDelete(string $id = null)
+    public function buildDelete(int $id = null)
     {
-        if($id !== null) return "DELETE FROM {$this->dbName} WHERE id = {$id}";
-        else if($this->deleteAll) return "TRUNCATE {$this->dbName}";
+        if($id !== null) return "DELETE FROM {$this->tableName} WHERE id = '{$id}'";
+        else if($this->deleteAll) return "TRUNCATE {$this->tableName}";
         else throw new Exception("No id given");
     }
 
@@ -122,20 +115,20 @@ class ReflectionSqlBuilder
     private function fill(): void
     {
         $this->selectors = $this->getSelectors();
-        $this->dbName = $this->getDatabaseName();
+        $this->tableName = $this->getTableName();
     }
 
-    // function for getting database name
-    // function get database name based on entity name
-    // returns string with database name
-    private function getDatabaseName(): string
+    // function for getting table name
+    // function get table name based on entity name
+    // returns string with table name
+    private function getTableName(): string
     {
-        $dbName = get_class($this->entity);
-        $tmpArray = explode("\\", $dbName);
-        $dbName = $tmpArray[1];
-        $dbName .= "s";
-        $dbName = lcfirst($dbName);
-        return $dbName;
+        $tableName = get_class($this->entity);
+        $tmpArray = explode("\\", $tableName);
+        $tableName = $tmpArray[1];
+        $tableName .= "s";
+        $tableName = lcfirst($tableName);
+        return $tableName;
     }
 
     // function for getting all selectors
@@ -163,6 +156,16 @@ class ReflectionSqlBuilder
 
         $selectors = substr($selectors, 2, );
         return $selectors;
+    }
+
+    private function getClassGetMethods(): array
+    {
+        $classMethods = get_class_methods($this->entity);
+        foreach ($classMethods as $methodName)
+        {
+            if(substr($methodName, 0, 3) === "get") $classGetters[] = $methodName;
+        }
+        return $classGetters;
     }
 
 

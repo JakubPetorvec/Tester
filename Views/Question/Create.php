@@ -5,7 +5,7 @@ use Entities\Question;
 if (!isset($model)) $model = new Question();
 if (!isset($errors)) $errors = [];
 ?><table class="question-table">
-    <tr><td><h4><a href="Index.php?controller=Question&action=index&test_id=<?php echo $model->getTestId()?>">Questions</a></h4></td></tr><?php
+    <tr><td><h4><a href="Index.php?controller=Question&action=index&testId=<?php echo $model->getTestId()?>">Questions</a></h4></td></tr><?php
 foreach ($errors as $error)
 {
  ?><tr><td> <?php echo $error?></td></tr><?php
